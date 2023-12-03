@@ -21,7 +21,7 @@
                 <li>Lembaga</li>
                 <li>Produk Desa</li>
                 <li>UMKM Masyarakat Desa</li>
-                <li><a href="#">Admin</a></li>
+                <li><a href="./login.php">Admin</a></li>
             </ul>
             <div class="toggle button small" id="toggle-navbar">
                 <img src="./img/expand.png"></img>
