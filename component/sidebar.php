@@ -2,10 +2,10 @@
 class Sidebar {
     static $menuList = [
         "dashboard" => "Dashboard",
-        "data_penduduk" => "Data Penduduk",
-        "form_penduduk" => "Form Penduduk",
+        "table-penduduk" => "Data Penduduk",
+        "form-penduduk" => "Form Penduduk",
         "laporan" => "Laporan",
-        "master_data" => "Master Data"
+        "table-master" => "Master Data"
     ];
     static public function selection($select) {
         return sidebarElement($select, self::$menuList);
@@ -26,7 +26,7 @@ class Sidebar {
         <ul class="nav nav-pills flex-column mb-auto">
             <?php foreach ($data as $key => $value) : ?>
                 <li class="nav-item">
-                    <a href="#" class="nav-link <?= ($key == $select) ? 'active' : 'text-white' ?>" aria-current="page">
+                    <a href="./<?= $key ?>.php" class="nav-link <?= ($key == $select) ? 'active' : 'text-white' ?>" aria-current="page">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#home" />
                         </svg>
