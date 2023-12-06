@@ -2,6 +2,7 @@
 require './config/db.php';
 require_once "./component/chart.php";
 require_once "./component/sidebar.php";
+require_once "./backend/query.php";
 require_once "./backend/form-penduduk.php";
 
 if (isset($_POST['submit'])) {

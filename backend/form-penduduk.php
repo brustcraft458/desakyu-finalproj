@@ -10,11 +10,14 @@ function inputPenduduk() {
     $pekerjaan = $_POST['pekerjaan'];
 
     // Insert data
-    $sql = "INSERT INTO warga (nama, nik, umur, pekerjaan)
-            VALUES ('$nama', '$nik', $umur, '$pekerjaan')";
+    $query = Query::execute("INSERT INTO warga (nama, nik, umur, pekerjaan) VALUES (?, ?, ?, ?)", [
+        $nama,
+        $nik,
+        $umur,
+        $pekerjaan
+    ]);
     
-    // Execute the query
-    $query = mysqli_query($db_connect, $sql);
+
     if (!$query) {
         echo "query gagal";
         die;
