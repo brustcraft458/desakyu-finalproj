@@ -10,7 +10,8 @@ function inputPenduduk() {
     $pekerjaan = $_POST['pekerjaan'];
 
     // Insert data
-    $query = Query::execute("INSERT INTO warga (nama, nik, umur, pekerjaan) VALUES (?, ?, ?, ?)", [
+    $query = new Query("INSERT INTO warga (nama, nik, umur, pekerjaan) VALUES (?, ?, ?, ?)");
+    $query->execute([
         $nama,
         $nik,
         $umur,
@@ -18,8 +19,8 @@ function inputPenduduk() {
     ]);
     
 
-    if (!$query) {
-        echo "query gagal";
+    if (!$query->state) {
+        echo "query: $query->message";
         die;
     }
 }
