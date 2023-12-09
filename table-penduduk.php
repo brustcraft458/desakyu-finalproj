@@ -21,6 +21,7 @@ $pendudukList = loadPenduduk();
 
 <body>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <main class="d-flex flex-row">
         <!-- Sidebar -->
@@ -35,7 +36,7 @@ $pendudukList = loadPenduduk();
             </div>
     
             <!-- Content Row -->
-            <div class="card shadow mb-4" style="max-width: 300px">
+            <div class="card shadow mb-4" style="max-height: 40rem;">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Data Warga</h6>
                 </div>
@@ -48,7 +49,7 @@ $pendudukList = loadPenduduk();
                                 <th>Nik</th>
                                 <th>Umur</th>
                                 <th>Pekerjaan</th>
-                                <th>Aksi</th>
+                                <th style="width: 10.5em;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,18 +59,18 @@ $pendudukList = loadPenduduk();
                                     <td><?= $penduduk['nik']?></td>
                                     <td><?= $penduduk['umur']?></td>
                                     <td><?= $penduduk['pekerjaan']?></td>
-                                    <td>
-                                        <a class="btn btn-warning">Edit</a>
-                                        <a class="btn btn-danger">Hapus</a>
+                                    <td style="display: flex; justify-content: space-around;">
+                                        <button href="./edit-penduduk.php?id=<?= $penduduk['id'] ?>" class="btn btn-warning edit">Edit</button>
+                                        <button href="./backend/delete-penduduk.php?id=<?= $penduduk['id'] ?>" class="btn btn-danger delete">Hapus</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-
-                    <div>
-                        <a href="./form-penduduk.php" class="btn btn-primary">Tambah Data</a>
-                    </div>
+                </div>
+                
+                <div class="p-3">
+                    <a href="./form-penduduk.php" class="btn btn-primary">Tambah Data</a>
                 </div>
 
                 <div class="card-footer py-2">

@@ -5,7 +5,7 @@ function loadPenduduk() {
     global $db_connect;
 
     // Read data
-    $query = new Query("SELECT nama, nik, umur, pekerjaan FROM warga");
+    $query = new Query("SELECT id, nama, nik, umur, pekerjaan FROM warga");
     $query->execute();
 
     if(!$query->state) {
