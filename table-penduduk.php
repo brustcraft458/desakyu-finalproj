@@ -5,7 +5,8 @@ require_once "./component/sidebar.php";
 require_once "./backend/query.php";
 require_once "./backend/table-penduduk.php";
 
-$pendudukList = loadPenduduk();
+$page = getPage();
+$pendudukList = loadPenduduk($page);
 ?>
 
 <!DOCTYPE html>
@@ -69,8 +70,17 @@ $pendudukList = loadPenduduk();
                     </table>
                 </div>
                 
-                <div class="p-3">
+                <div class="d-flex justify-content-between p-3">
                     <a href="./form-penduduk.php" class="btn btn-primary">Tambah Data</a>
+                    <nav aria-label="Page navigation example" style="height: 38px">
+                        <ul class="pagination">
+                          <li class="page-item"><a class="page-link" href="?page=<?= $page - 1 ?>">Previous</a></li>
+                          <?php for ($i= $page; $i < $page + 3 ; $i++) :?>
+                            <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i?></a></li>
+                          <?php endfor ?>
+                          <li class="page-item"><a class="page-link" href="?page=<?= $page + 1 ?>">Next</a></li>
+                        </ul>
+                    </nav>
                 </div>
 
                 <div class="card-footer py-2">

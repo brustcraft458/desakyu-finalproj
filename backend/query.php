@@ -52,7 +52,7 @@ class Query {
     
         // Check result
         $result = $this->presql->get_result();
-        if (!$result) {
+        if (!$result || !$result->num_rows > 0) {
             if ($this->presql->affected_rows > 0) {
                 $this->state = true;
                 $this->message = "succes_nodata";
