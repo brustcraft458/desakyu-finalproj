@@ -6,7 +6,7 @@ require_once "./backend/query.php";
 require_once "./backend/table-penduduk.php";
 
 $page = getPage();
-$pendudukList = loadPenduduk($page);
+$pendudukList = loadPenduduk($page['cur']);
 ?>
 
 <!DOCTYPE html>
@@ -74,11 +74,25 @@ $pendudukList = loadPenduduk($page);
                     <a href="./form-penduduk.php" class="btn btn-primary">Tambah Data</a>
                     <nav aria-label="Page navigation example" style="height: 38px">
                         <ul class="pagination">
-                          <li class="page-item"><a class="page-link" href="?page=<?= $page - 1 ?>">Previous</a></li>
-                          <?php for ($i= $page; $i < $page + 3 ; $i++) :?>
-                            <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i?></a></li>
-                          <?php endfor ?>
-                          <li class="page-item"><a class="page-link" href="?page=<?= $page + 1 ?>">Next</a></li>
+                            <?php if ($page['cur'] > 0) :?>
+                                <li class="page-item"><a class="page-link" href="?page=<?= $page['cur'] - 1 ?>"><<</a></li>
+                            <?php else : ?>
+                                <li class="page-item"><a class="page-link disabled" href=""><<</a></li>
+                            <?php endif ?>
+
+                            <?php for ($i = $page['cur']; $i < $page['cur'] + 4 ; $i++) :?>
+                                <?php if ($i < $page['max']) : ?>
+                                    <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i?></a></li>
+                                <?php else :?>
+                                    <li class="page-item disabled"><a class="page-link" href="#"><?= $i?></a></li>
+                                <?php endif ?>
+                            <?php endfor ?>
+
+                            <?php if ($page['cur'] < $page['max'] - 1) :?>
+                                <li class="page-item"><a class="page-link" href="?page=<?= $page['cur'] + 1 ?>">>></a></li>
+                            <?php else :?>
+                                <li class="page-item"><a class="page-link disabled" href="#">>></a></li>
+                            <?php endif ?>
                         </ul>
                     </nav>
                 </div>

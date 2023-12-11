@@ -34,7 +34,7 @@ class Query {
 
             // Types
             foreach ($params as $prm) {
-                if (is_int($prm)) {
+                if (is_numeric($prm)) {
                     $types .= 'i';
                 }
                 elseif (is_string($prm)) {

@@ -23,6 +23,9 @@ function loginUser() {
     // Validation
     if($password != $data['password']) {return false;}
 
+    // Session
+    $_SESSION['username'] = $username;
+
     // End
     return true;
 }
