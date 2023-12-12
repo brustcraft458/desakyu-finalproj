@@ -16,15 +16,9 @@ function getPage() {
         die;
     }
 
-    // Limit
-    $count = $query->getData()['count'];
-    $limit = round($count / 6);
-
     // Max
-    $maximum = $current + 4;
-    if ($maximum > $limit) {
-        $maximum = $limit;
-    }
+    $count = $query->getData()['count'];
+    $maximum = ceil($count / 6);
 
     // Session
     $_SESSION['page_penduduk'] = $current;
