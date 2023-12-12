@@ -3,7 +3,7 @@ class Query {
     private $sql;
     private $presql;
     public $state = false;
-    public $message = ""; // fail_query | fail_nodata | succes_nodata | succes_data | succes_multidata
+    public $message = ""; // fail_query | fail_nodata | succes_nodata | succes_data
     private $data = [];
 
     public function __construct($sql) {
@@ -65,21 +65,12 @@ class Query {
         }
 
         // Get result
-        if ($result->num_rows == 1) {
-            // Single
-            $this->state = true;
-            $this->message = "succes_data";
+        $this->state = true;
+        $this->message = "succes_data";
+        $this->data = [];
 
-            $this->data = $result->fetch_assoc();
-        } else {
-            // Multi
-            $this->state = true;
-            $this->message = "succes_multidata";
-            $this->data = [];
-
-            while ($row = $result->fetch_assoc()) {
-                array_push($this->data, $row);
-            }
+        while ($row = $result->fetch_assoc()) {
+            array_push($this->data, $row);
         }
     
         // End
@@ -87,8 +78,14 @@ class Query {
         return;
     }
 
-    public function getData() {
-        return $this->data;
+    public function getData($type = "single") {
+        if ($type == "single") {
+            return $this->data[0];
+        } elseif ($type == "multi") {
+            return $this->data;
+        }
+
+        return [];
     }
 }
 ?>

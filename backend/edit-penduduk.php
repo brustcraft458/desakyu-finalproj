@@ -13,7 +13,7 @@ function getPenduduk($id) {
         die;
     }
 
-    return $query->getData();;
+    return $query->getData();
 }
 
 function updatePenduduk($id) {

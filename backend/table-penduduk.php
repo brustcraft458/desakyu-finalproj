@@ -51,7 +51,7 @@ function loadPenduduk($page) {
         die;
     }
 
-    return $query->getData();
+    return $query->getData("multi");
 }
 
 ?>
