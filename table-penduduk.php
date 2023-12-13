@@ -6,7 +6,8 @@ require_once "./backend/query.php";
 require_once "./backend/table-penduduk.php";
 
 $page = getPage();
-$pendudukList = loadPenduduk($page['cur']);
+$search = getSearchBox();
+$pendudukList = loadPenduduk($page['cur'], $search);
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +18,7 @@ $pendudukList = loadPenduduk($page['cur']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.7.0/remixicon.min.css" integrity="sha512-9dM+qk2jOZSKUQwjFh8iOtYvIoz3HidudalPDswePq12rBzkbVAQYqb1lrASFwocSLSUJ5TqNQ6xgNuOFSfT6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Document</title>
 </head>
 
@@ -41,6 +43,16 @@ $pendudukList = loadPenduduk($page['cur']);
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Data Warga</h6>
                 </div>
+
+                <form action="" method="POST" class="navbar-search mt-3 px-3 w-25">
+                    <div class="input-group">
+                        <input type="text" name="data" class="form-control bg-light border-0 small" placeholder="Cari untuk...">
+                        
+                        <button class="btn btn-primary" type="submit" name="search">
+                            <i class="ri-search-line"></i>
+                        </button>
+                    </div>
+                </form>
 
                 <div class="table-responsive p-3">
                     <table class="table table-bordered" id="dataTable" cellspacing="0">
