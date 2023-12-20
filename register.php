@@ -1,22 +1,12 @@
 <?php
 require './config/db.php';
+require_once "./backend/query.php";
 require_once "./backend/register.php";
 
-// Init
-$page = 0;
-$backres = ['state' => true, 'message' => ''];
-
-if (isset($_POST['next_1'])) {
-    $backres = registerUserFirst();
-    if ($backres['state']) {
-        $page = 1;
-    }
-}
-
-else if (isset($_POST['submit'])) {
-    $backres = registerUserFinal();
-    if ($backres['state']) {   
-        $page = 2;
+if (isset($_POST['register'])) {
+    registerUser();
+    if ($query_state) {
+        header("Location: login.php");
     }
 }
 ?>
@@ -39,72 +29,34 @@ else if (isset($_POST['submit'])) {
             <img src="./img/form-fill.jpg">
         </div>
 
-        <?php if ($page == 0) : ?>
-            <div class="content">
-                <div class="box title">
-                    <h2>Register</h2>
-                    <?php elementMessage() ?>
-                </div>
-                <div class="box">
-                    <label for="username">Username:</label><br>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="box">
-                    <label for="password">Password:</label><br>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div class="box">
-                    <input type="submit" class="button primary" name="next_1" value="Next">
-                </div>
+        <div class="content">
+            <div class="box title">
+                <h2>Register</h2>
+                <?php elementMessage() ?>
             </div>
-        <?php endif ?>
-        
-        <?php if ($page == 1) : ?>
-            <div class="content">
-                <div class="box title">
-                    <h2>Register</h2>
-                    <?php elementMessage() ?>
-                </div>
-                <div class="box">
-                    <label for="nik">Nik:</label><br>
-                    <input type="number" id="nik" name="nik" required>
-                </div>
-                <div class="box">
-                    <label for="nama">Nama:</label><br>
-                    <input type="text" id="nama" name="nama" required>
-                </div>
-                <div class="box">
-                    <label for="umur">Umur:</label><br>
-                    <input type="number" id="umur" name="umur" required>
-                </div>
-                <div class="box">
-                    <input type="submit" class="button primary" name="submit" value="Submit">
-                </div>
+            <div class="box">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" required>
             </div>
-        <?php endif?>
-
-        <?php if ($page == 2 && $backres['state'] && $backres['message'] == "success") : ?>
-            <div class="content">
-                <div class="box title">
-                    <h2>Register</h2>
-                    <p class="message success">Data berhasil dikirim</p>
-                </div>
-                <div class="box">
-                    <a class="button primary" href="./login.php">Kembali</a>
-                </div>
+            <div class="box">
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required>
             </div>
-        <?php endif ?>
+            <div class="box">
+                <input type="submit" class="button primary" name="register" value="Register">
+            </div>
+        </div>
     </form>
 </body>
 </html>
 
 <?php function elementMessage() { 
-    global $backres;
+    global $query_state, $query_message;
     ?>
-    <?php if (!$backres['state']) :?>
-        <?php if ($backres['message'] == "fail_query") : ?>
+    <?php if (!$query_state) :?>
+        <?php if ($query_message == "fail_query") : ?>
             <p class="message error">Query database gagal</p>
-        <?php elseif ($backres['message'] == "empty_form") : ?>
+        <?php elseif ($query_message == "empty_form") : ?>
             <p class="message error">Data tidak boleh kosong</p>
         <?php endif ?>
     <?php else : ?>

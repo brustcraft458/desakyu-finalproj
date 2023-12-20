@@ -11,6 +11,11 @@ class Query {
         $this->sql = $sql;
 
         // Query
+        if (!$db_connect) {
+            $this->message = "fail_query";
+            return;
+        }
+
         $this->presql = $db_connect->prepare($sql);
     }
 
@@ -78,6 +83,11 @@ class Query {
         return;
     }
 
+    
+    public function getInsertedId() {
+        return $this->presql->insert_id;
+    }
+    
     public function getData($type = "single") {
         if ($type == "single") {
             return $this->data[0];

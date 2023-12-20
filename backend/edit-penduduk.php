@@ -3,7 +3,7 @@ session_start();
 
 function getPenduduk($id) {
     // Get data
-    $query = new Query("SELECT nama, nik, umur, pekerjaan FROM warga WHERE id = ?");
+    $query = new Query("SELECT nama, nik, umur, pekerjaan FROM penduduk WHERE id_penduduk = ?");
     $query->execute([
         $id
     ]);
@@ -23,7 +23,7 @@ function updatePenduduk($id) {
     $pekerjaan = $_POST['pekerjaan'];
 
     // Update data
-    $query = new Query("UPDATE warga SET nama = ? , nik = ? , umur = ?, pekerjaan = ? WHERE id = ?");
+    $query = new Query("UPDATE penduduk SET nama = ? , nik = ? , umur = ?, pekerjaan = ? WHERE id_penduduk = ?");
     $query->execute([
         $nama,
         $nik,

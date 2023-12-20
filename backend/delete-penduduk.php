@@ -9,8 +9,8 @@ if (isset($_GET['id'])) {
 }
 
 function deletePenduduk($id) {
-    // Get data
-    $query = new Query("DELETE FROM warga WHERE id = ?");
+    // Delete data
+    $query = new Query("UPDATE penduduk SET status_deleted = 1 WHERE id_penduduk = ?");
     $query->execute([
         $id
     ]);

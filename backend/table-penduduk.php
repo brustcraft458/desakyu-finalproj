@@ -10,7 +10,7 @@ function getPage() {
     }
     
     // Count
-    $query = new Query("SELECT COUNT(*) AS count FROM warga");
+    $query = new Query("SELECT COUNT(*) AS count FROM penduduk WHERE status_deleted = 0");
     $query->execute();
 
     if(!$query->state) {
@@ -39,7 +39,7 @@ function getSearchBox() {
 }
 
 function loadPenduduk($page, $search = "") {
-    global $db_connect, $query_state, $query_message;
+    global $query_state, $query_message;
 
     // Page
     $min = $page * 6;
@@ -48,7 +48,7 @@ function loadPenduduk($page, $search = "") {
     // Read data
     if (!empty($search)) {
         // Search
-        $query = new Query("SELECT id, nama, nik, umur, pekerjaan FROM warga WHERE concat(nama, nik, umur, pekerjaan) LIKE ? LIMIT ?, ?");
+        $query = new Query("SELECT id_penduduk, nama, nik, umur, pekerjaan FROM penduduk WHERE status_deleted = 0 AND concat(nama, nik, umur, pekerjaan) LIKE ? LIMIT ?, ?");
 
         $query->execute([
             "%$search%",
@@ -57,7 +57,7 @@ function loadPenduduk($page, $search = "") {
         ]);
     } else {
         // Default
-        $query = new Query("SELECT id, nama, nik, umur, pekerjaan FROM warga LIMIT ?, ?");
+        $query = new Query("SELECT id_penduduk, nama, nik, umur, pekerjaan FROM penduduk WHERE status_deleted = 0 LIMIT ?, ?");
 
         $query->execute([
             $min,

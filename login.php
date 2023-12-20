@@ -1,16 +1,14 @@
 <?php
 require './config/db.php';
+require_once "./backend/query.php";
 require_once "./backend/login.php";
 
-// Init
-$login_error = false;
-
 if (isset($_POST['submit'])) {
-    if (loginUser()) {
+    loginUser();
+
+    if ($query_state) {
         // Lakukan
         header("Location: dashboard.php");
-    } else {
-        $login_error = true;
     }
 }
 
@@ -36,8 +34,12 @@ if (isset($_POST['submit'])) {
         <div class="content">
             <div class="box title">
                 <h2>Login Akun</h2>
-                <?php if ($login_error) :?>
-                    <p class="message error">Email atau password salah.</p>
+                <?php if (!$query_state) : ?>
+                    <?php if ($query_message == "fail_nodata") :?>
+                        <p class="message error">Email atau password salah.</p>
+                    <?php elseif ($query_message == "fail_query") : ?>
+                        <p class="message error">Query database gagal</p>
+                    <?php endif ?>
                 <?php endif ?>
             </div>
             <div class="box">

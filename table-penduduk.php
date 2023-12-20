@@ -73,8 +73,8 @@ $pendudukList = loadPenduduk($page['cur'], $search);
                                     <td><?= $penduduk['umur']?></td>
                                     <td><?= $penduduk['pekerjaan']?></td>
                                     <td style="display: flex; justify-content: space-around;">
-                                        <button href="./edit-penduduk.php?id=<?= $penduduk['id'] ?>" class="btn btn-warning edit">Edit</button>
-                                        <button href="./backend/delete-penduduk.php?id=<?= $penduduk['id'] ?>" class="btn btn-danger delete">Hapus</button>
+                                        <button href="./edit-penduduk.php?id=<?= $penduduk['id_penduduk'] ?>" class="btn btn-warning edit">Edit</button>
+                                        <button href="./backend/delete-penduduk.php?id=<?= $penduduk['id_penduduk'] ?>" class="btn btn-danger delete">Hapus</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

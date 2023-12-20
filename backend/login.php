@@ -1,8 +1,10 @@
 <?php
 session_start();
+$query_state = false;
+$query_message = "";
 
 function loginUser() {
-    global $db_connect;
+    global $query_state, $query_message;
 
     // Check
     if (!isset($_POST['username']) ||
@@ -14,20 +16,30 @@ function loginUser() {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $user = mysqli_query($db_connect,"SELECT * FROM user WHERE username = '$username'");
+    $query = new Query("SELECT * FROM user WHERE username = ? AND password = ?");
+    $query->execute([
+        $username,
+        $password
+    ]);
 
     // Check
-    if(!mysqli_num_rows($user) > 0) {return false;}
-    $data = mysqli_fetch_assoc($user);
-    
-    // Validation
-    if($password != $data['password']) {return false;}
+    if (!$query->state) {
+        $query_state = false;
+        $query_message = $query->message;
+        return;
+    }
+
+    $data = $query->getData();
 
     // Session
-    $_SESSION['username'] = $username;
+    $_SESSION['id_user'] = $data['id_user'];
+    $_SESSION['username'] = $data['username'];
+    $_SESSION['password'] = $data['password'];
 
     // End
-    return true;
+    $query_state = true;
+    $query_message = $query->message;
+    return $data;
 }
 
 ?>
