@@ -4,10 +4,19 @@ require_once "./component/chart.php";
 require_once "./component/sidebar.php";
 require_once "./backend/query.php";
 require_once "./backend/table-penduduk.php";
+require_once "./backend/aksi-penduduk.php";
 
 $page = getPage();
 $search = getSearchBox();
 $pendudukList = loadPenduduk($page['cur'], $search);
+
+// Aksi
+if (isset($_POST['add-penduduk'])) {
+    inputPenduduk();
+    header("Location: table-penduduk.php");
+} elseif (isset($_POST['edit-penduduk'])) {
+    //
+}
 ?>
 
 <!DOCTYPE html>
@@ -60,30 +69,34 @@ $pendudukList = loadPenduduk($page['cur'], $search);
                             <tr>
                                 <th>Nama</th>
                                 <th>Nik</th>
-                                <th>Umur</th>
-                                <th>Pekerjaan</th>
-                                <th style="width: 10.5em;">Aksi</th>
+                                <th style="width: 17.5em;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($pendudukList as $penduduk) :?>
+                            <?php foreach ($pendudukList as $count => $penduduk) :?>
                                 <tr>
                                     <td><?= $penduduk['nama']?></td>
                                     <td><?= $penduduk['nik']?></td>
-                                    <td><?= $penduduk['umur']?></td>
-                                    <td><?= $penduduk['pekerjaan']?></td>
                                     <td style="display: flex; justify-content: space-around;">
+                                        <button type="button" class="btn btn-primary">Lihat Detail</button>
                                         <button href="./edit-penduduk.php?id=<?= $penduduk['id_penduduk'] ?>" class="btn btn-warning edit">Edit</button>
                                         <button href="./backend/delete-penduduk.php?id=<?= $penduduk['id_penduduk'] ?>" class="btn btn-danger delete">Hapus</button>
                                     </td>
                                 </tr>
+                                
+                                <!-- Modal Edit Penduduk -->
+                                <div class="modal fade" id="edit-penduduk-<?= $count ?>" tabindex="-1" role="dialog" aria-labelledby="form-penduduk-label" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                    </div>
+                                </div>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
                 
                 <div class="d-flex justify-content-between p-3">
-                    <a href="./form-penduduk.php" class="btn btn-primary">Tambah Data</a>
+                    <!-- <a href="./form-penduduk.php" class="btn btn-primary">Tambah Data</a> -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-form">Tambah Data</button>
                     <nav aria-label="Page navigation example" style="height: 38px">
                         <ul class="pagination">
                             <?php if ($page['cur'] > 0) :?>
@@ -114,6 +127,102 @@ $pendudukList = loadPenduduk($page['cur'], $search);
             </div>
         </div>
     </main>
+
+    <!-- Modal Tambah Penduduk -->
+    <div class="modal fade" id="add-form" tabindex="-1" role="dialog" aria-labelledby="form-penduduk" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form action="" method="POST" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="form-penduduk">Input Data Penduduk</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-group">
+                            <label for="nik" class="col-form-label">Nik:</label>
+                            <input type="number" class="form-control" id="nik" name="nik">
+                        </div>
+                        <div class="form-group">
+                            <label for="nama" class="col-form-label">Nama:</label>
+                            <input type="text" class="form-control" id="nama" name="nama">
+                        </div>
+                        <div class="form-group">
+                            <label for="tempat_lahir" class="col-form-label">Tempat, Tanggal Lahir:</label>
+                            <div class="d-flex flex-row gap-2">
+                                <input type="text" class="form-control w-50" id="tempat_lahir" name="tempat_lahir">
+                                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin:</label>
+                            <select id="jenis_kelamin" name="jenis_kelamin" class="form-control">
+                                <option value="laki-laki">Laki-Laki</option>
+                                <option value="perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat" class="col-form-label">Alamat:</label>
+                            <input type="text" class="form-control" id="alamat" name="alamat">
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat_rt" class="col-form-label">Alamat Rt/Rw:</label>
+                            <div class="d-flex flex-row gap-2">
+                                <input type="number" class="form-control w-50" id="alamat_rt" name="alamat_rt">
+                                <input type="number" class="form-control w-50" id="alamat_rw" name="alamat_rw">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat_kel-desa" class="col-form-label">Alamat Kelurahan/Desa:</label>
+                            <input type="text" class="form-control" id="alamat_kel-desa" name="alamat_kel-desa">
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat_kecamatan" class="col-form-label">Alamat Kecamatan:</label>
+                            <input type="text" class="form-control" id="alamat_kecamatan" name="alamat_kecamatan">
+                        </div>
+                        <div class="form-group">
+                            <label for="agama" class="col-form-label">Agama:</label>
+                            <select id="agama" name="agama" class="form-control">
+                                <option value="islam">Islam</option>
+                                <option value="kristen">Kristen</option>
+                                <option value="hindu">Hindu</option>
+                                <option value="budha">Budha</option>
+                                <option value="katolik">Katolik</option>
+                                <option value="konghucu">Konghucu</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="status_perkawinan" class="col-form-label">Status Perkawinan:</label>
+                            <select id="status_perkawinan" name="status_perkawinan" class="form-control">
+                                <option value="belum kawin">Belum Kawin</option>
+                                <option value="kawin">Kawin</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pekerjaan" class="col-form-label">Pekerjaan:</label>
+                            <select id="pekerjaan" name="pekerjaan" class="form-control">
+                                <option value="pelajar">Pelajar</option>
+                                <option value="karyawan">Karyawan</option>
+                                <option class="custom-option" value="lainnya">Lainnya...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="kewarganegaraan" class="col-form-label">Kewarganegaraan:</label>
+                            <select id="kewarganegaraan" name="kewarganegaraan" class="form-control">
+                                <option value="wni">WNI</option>
+                                <option value="wna">WNA</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" name="add-penduduk">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

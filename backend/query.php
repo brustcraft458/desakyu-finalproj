@@ -19,7 +19,7 @@ class Query {
         $this->presql = $db_connect->prepare($sql);
     }
 
-    public function execute($params = []) {
+    public function execute($params = [], $textEffect = "") {
         // Check
         if (!$this->presql) {
             $this->state = false;
@@ -35,6 +35,9 @@ class Query {
             // Params to references
             foreach($bindParams as $key => $value) {
                 $bindParams[$key] = &$bindParams[$key];
+                if ($textEffect == "lowercase") {
+                    $bindParams[$key] = strtolower($bindParams[$key]);
+                }
             }
 
             // Types

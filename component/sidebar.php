@@ -3,7 +3,7 @@ class Sidebar {
     static $menuList = [
         "dashboard" => "Dashboard",
         "table-penduduk" => "Data Penduduk",
-        "form-penduduk" => "Form Penduduk",
+        "surat" => "Layanan Surat",
         "laporan" => "Laporan",
         "table-master" => "Master Data"
     ];

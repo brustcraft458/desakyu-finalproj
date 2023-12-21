@@ -48,7 +48,7 @@ function loadPenduduk($page, $search = "") {
     // Read data
     if (!empty($search)) {
         // Search
-        $query = new Query("SELECT id_penduduk, nama, nik, umur, pekerjaan FROM penduduk WHERE status_deleted = 0 AND concat(nama, nik, umur, pekerjaan) LIKE ? LIMIT ?, ?");
+        $query = new Query("SELECT id_penduduk, nama, nik FROM penduduk WHERE status_deleted = 0 AND concat(nama, nik) LIKE ? LIMIT ?, ?");
 
         $query->execute([
             "%$search%",
@@ -57,7 +57,7 @@ function loadPenduduk($page, $search = "") {
         ]);
     } else {
         // Default
-        $query = new Query("SELECT id_penduduk, nama, nik, umur, pekerjaan FROM penduduk WHERE status_deleted = 0 LIMIT ?, ?");
+        $query = new Query("SELECT id_penduduk, nama, nik FROM penduduk WHERE status_deleted = 0 LIMIT ?, ?");
 
         $query->execute([
             $min,

@@ -16,6 +16,28 @@ document.querySelectorAll(".btn.delete").forEach(element => {
     elementDeleteAlert(element);
 });
 
+// Custom Option Input
+document.querySelectorAll('.custom-option').forEach(element => {
+    elementCustomOption(element, element.parentNode)
+});
+
+
+// Custom Option
+function elementCustomOption(option, parrent) {
+    parrent.onchange = (event) => {
+        const input = event.target.value;
+        if (input != option.value) {return}
+
+        const container = parrent.parentNode
+        let className = parrent.className
+        let id = parrent.id
+        parrent.outerHTML = `<input type="text" class="${className}" id="${id}" name="${parrent.name}">`
+
+        const nParrent = container.querySelector(`#${id}`)
+        nParrent.focus()
+    }
+}
+
 // Edit Alert
 function elementEditAlert(button) {
     const href = button.getAttribute("href")
