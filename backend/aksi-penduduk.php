@@ -1,8 +1,12 @@
 <?php
+$aksi_state = false;
+$aksi_message = "";
 
 function inputPenduduk() {
+    global $aksi_state, $aksi_message;
+
     // Insert data
-    $query = new Query("INSERT INTO penduduk (nik, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, alamat, alamat_rt, alamat_rw, alamat_kel_desa, alamat_kecamatan, agama, status_perkawinan, pekerjaan, kewarganegaraan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $query = new Query("INSERT INTO penduduk (nik, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, alamat, alamat_rt, alamat_rw, alamat_kel_desa, alamat_kecamatan, agama, status_perkawinan, pekerjaan, kewarganegaraan) VALUES (LOWER(?), LOWER(?), LOWER(?), LOWER(?), LOWER(?), LOWER(?), LOWER(?), LOWER(?), LOWER(?), LOWER(?), LOWER(?), LOWER(?), LOWER(?), LOWER(?))");
     $query->execute([
         $_POST['nik'],
         $_POST['nama'],
@@ -18,7 +22,13 @@ function inputPenduduk() {
         $_POST['status_perkawinan'],
         $_POST['pekerjaan'],
         $_POST['kewarganegaraan']
-    ], "lowercase");
+    ]);
+
+    if (!$query->state) {
+        $aksi_state = false;
+        $aksi_message = $query->message;
+        return;
+    }
     
     $id_penduduk = $query->getInsertedId();
     $id_user = $_SESSION['id_user'];
@@ -30,12 +40,10 @@ function inputPenduduk() {
         $id_penduduk,
         "add penduduk"
     ]);
-    
 
-    if (!$query->state) {
-        echo "query: $query->message";
-        die;
-    }
+    // End
+    $aksi_state = true;
+    $aksi_message = $query->message;
 }
 
 function updatePenduduk($id) {

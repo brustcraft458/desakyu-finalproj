@@ -2,21 +2,21 @@
 require './config/db.php';
 require_once "./component/chart.php";
 require_once "./component/sidebar.php";
+require_once "./backend/function.php";
 require_once "./backend/query.php";
 require_once "./backend/table-penduduk.php";
 require_once "./backend/aksi-penduduk.php";
 
-$page = getPage();
-$search = getSearchBox();
-$pendudukList = loadPenduduk($page['cur'], $search);
-
 // Aksi
 if (isset($_POST['add-penduduk'])) {
     inputPenduduk();
-    header("Location: table-penduduk.php");
 } elseif (isset($_POST['edit-penduduk'])) {
     //
 }
+
+$page = getPage();
+$search = getSearchBox();
+$pendudukList = loadPenduduk($page['cur'], $search);
 ?>
 
 <!DOCTYPE html>
@@ -64,6 +64,16 @@ if (isset($_POST['add-penduduk'])) {
                 </form>
 
                 <div class="table-responsive p-3">
+                    <div class="w-50">
+                        <?php if (!$aksi_state) :?>
+                            <?php if ($aksi_message == "fail_query") : ?>
+                                <p class="alert alert-danger">Query database gagal</p>
+                            <?php elseif ($aksi_message == "fail_emptydata") : ?>
+                                <p class="alert alert-danger">Input Data tidak boleh kosong</p>
+                            <?php endif ?>
+                        <?php else : ?>
+                        <?php endif ?>
+                    </div>
                     <table class="table table-bordered" id="dataTable" cellspacing="0">
                         <thead>
                             <tr>

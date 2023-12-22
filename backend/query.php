@@ -19,7 +19,7 @@ class Query {
         $this->presql = $db_connect->prepare($sql);
     }
 
-    public function execute($params = [], $textEffect = "") {
+    public function execute($params = []) {
         // Check
         if (!$this->presql) {
             $this->state = false;
@@ -35,18 +35,20 @@ class Query {
             // Params to references
             foreach($bindParams as $key => $value) {
                 $bindParams[$key] = &$bindParams[$key];
-                if ($textEffect == "lowercase") {
-                    $bindParams[$key] = strtolower($bindParams[$key]);
-                }
-            }
+                $prm = $bindParams[$key];
 
-            // Types
-            foreach ($params as $prm) {
+                // Types
                 if (is_numeric($prm)) {
                     $types .= 'i';
                 }
                 elseif (is_string($prm)) {
                     $types .= 's';
+
+                    if (isEmpty($prm)) {
+                        $this->state = false;
+                        $this->message = "fail_emptydata";
+                        return;
+                    }
                 }
             }
 
