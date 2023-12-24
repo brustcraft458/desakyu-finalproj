@@ -4,7 +4,7 @@ $query_state = false;
 $query_message = "";
 
 function getPage() {
-    $current = 0;
+    $current = 1;
     if (isset($_GET['page']) && is_numeric($_GET['page'])) {
         $current = intval($_GET['page']);
     }
@@ -42,13 +42,13 @@ function loadPenduduk($page, $search = "") {
     global $query_state, $query_message;
 
     // Page
-    $min = $page * 6;
+    $min = ($page - 1) * 6;
     $max = 6;
 
     // Read data
     if (!empty($search)) {
         // Search
-        $query = new Query("SELECT id_penduduk, nama, nik FROM penduduk WHERE status_deleted = 0 AND concat(nama, nik) LIKE ? LIMIT ?, ?");
+        $query = new Query("SELECT * FROM penduduk WHERE status_deleted = 0 AND concat(nama, nik, jenis_kelamin, status_perkawinan, pekerjaan) LIKE ? LIMIT ?, ?");
 
         $query->execute([
             "%$search%",
@@ -57,7 +57,7 @@ function loadPenduduk($page, $search = "") {
         ]);
     } else {
         // Default
-        $query = new Query("SELECT id_penduduk, nama, nik FROM penduduk WHERE status_deleted = 0 LIMIT ?, ?");
+        $query = new Query("SELECT * FROM penduduk WHERE status_deleted = 0 LIMIT ?, ?");
 
         $query->execute([
             $min,

@@ -1,5 +1,6 @@
 <?php
 require './config/db.php';
+require_once "./backend/function.php";
 require_once "./backend/query.php";
 require_once "./backend/register.php";
 

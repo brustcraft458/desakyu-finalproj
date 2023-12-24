@@ -33,8 +33,8 @@ function loginUser() {
 
     // Session
     $_SESSION['id_user'] = $data['id_user'];
+    $_SESSION['role'] = $data['role'];
     $_SESSION['username'] = $data['username'];
-    $_SESSION['password'] = $data['password'];
 
     // End
     $query_state = true;

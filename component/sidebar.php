@@ -1,16 +1,27 @@
 <?php
 class Sidebar {
-    static $menuList = [
-        "dashboard" => "Dashboard",
-        "table-penduduk" => "Data Penduduk",
-        "surat" => "Layanan Surat",
-        "laporan" => "Laporan",
-        "table-master" => "Master Data"
-    ];
+    static $menuList = [];
     static public function selection($select) {
         $username = "";
+        $role = "";
         if (isset($_SESSION['username'])) {
             $username = $_SESSION['username'];
+        }
+        if (isset($_SESSION['role'])) {
+            $role = $_SESSION['role'];
+        }
+
+        // Menu
+        if ($role == "warga") {
+            self::$menuList =  ["dashboard" => ["Dashboard", "ri-dashboard-2-line"]];
+        } elseif ($role == "admin_rt" || $role == "admin_desa" || $role == "admin_super") {
+            self::$menuList = [
+                "dashboard" => ["Dashboard", "ri-dashboard-2-line"],
+                "table-penduduk" => ["Data Penduduk", "ri-table-line"],
+                "surat" => ["Layanan Surat", "ri-mail-line"],
+                "laporan" => ["Laporan", "ri-file-text-line"],
+                "table-master" => ["Master Data", "ri-dashboard-2-line"]
+            ];
         }
 
         return sidebarElement($select, self::$menuList, $username);
@@ -32,10 +43,8 @@ class Sidebar {
             <?php foreach ($data as $key => $value) : ?>
                 <li class="nav-item">
                     <a href="./<?= $key ?>.php" class="nav-link <?= ($key == $select) ? 'active' : 'text-white' ?>" aria-current="page">
-                        <svg class="bi me-2" width="16" height="16">
-                            <use xlink:href="#home" />
-                        </svg>
-                        <?= $value ?>
+                        <i class="<?= $value[1] ?>"></i>
+                        <?= $value[0] ?>
                     </a>
                 </li>
             <?php endforeach; ?>
