@@ -223,26 +223,26 @@ $pendudukList = loadPenduduk($page['cur'], $search);
     <div class="modal-body">
         <div>
             <div style="display: none">
-                <input type="hidden" class="form-control" id="id_penduduk" name="id_penduduk" value="<?= $penduduk['id_penduduk'] ?>">
+                <input type="hidden" class="form-control text-uppercase" id="id_penduduk" name="id_penduduk" value="<?= $penduduk['id_penduduk'] ?>">
             </div>
             <div class="form-group">
                 <label for="nik" class="col-form-label">NIK:</label>
-                <input type="number" class="form-control" id="nik" name="nik" value="<?= $penduduk['nik'] ?>" <?= $inputAttribute ?>>
+                <input type="number" class="form-control text-uppercase" id="nik" name="nik" value="<?= $penduduk['nik'] ?>" <?= $inputAttribute ?>>
             </div>
             <div class="form-group">
                 <label for="nama" class="col-form-label">Nama:</label>
-                <input type="text" class="form-control" id="nama" name="nama" value="<?= $penduduk['nama'] ?>" <?= $inputAttribute ?>>
+                <input type="text" class="form-control text-uppercase" id="nama" name="nama" value="<?= $penduduk['nama'] ?>" <?= $inputAttribute ?>>
             </div>
             <div class="form-group">
                 <label for="tempat_lahir" class="col-form-label">Tempat, Tanggal Lahir:</label>
                 <div class="d-flex flex-row gap-2">
-                    <input type="text" class="form-control w-50" id="tempat_lahir" name="tempat_lahir" value="<?= $penduduk['tempat_lahir'] ?>" <?= $inputAttribute ?>>
-                    <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="<?= $penduduk['tanggal_lahir'] ?>" <?= $inputAttribute ?>>
+                    <input type="text" class="form-control text-uppercase w-50" id="tempat_lahir" name="tempat_lahir" value="<?= $penduduk['tempat_lahir'] ?>" <?= $inputAttribute ?>>
+                    <input type="date" class="form-control text-uppercase" id="tanggal_lahir" name="tanggal_lahir" value="<?= $penduduk['tanggal_lahir'] ?>" <?= $inputAttribute ?>>
                 </div>
             </div>
             <div class="form-group">
                 <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin:</label>
-                <select id="jenis_kelamin" name="jenis_kelamin" class="form-control" <?= $inputAttribute ?>>
+                <select id="jenis_kelamin" name="jenis_kelamin" class="form-control text-uppercase" <?= $inputAttribute ?>>
                     <option <?= atOption($penduduk['jenis_kelamin'], "LAKI-LAKI") ?>>LAKI-LAKI</option>
                     <option <?= atOption($penduduk['jenis_kelamin'], "PEREMPUAN") ?>>PEREMPUAN</option>
                 </select>
@@ -252,29 +252,29 @@ $pendudukList = loadPenduduk($page['cur'], $search);
                 <div class="px-3 border">
                     <div class="form-group">
                         <label for="alamat" class="col-form-label">Alamat:</label>
-                        <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $penduduk['alamat'] ?>" <?= $inputAttribute ?>>
+                        <input type="text" class="form-control text-uppercase" id="alamat" name="alamat" value="<?= $penduduk['alamat'] ?>" <?= $inputAttribute ?>>
                     </div>
                     <div class="form-group">
                         <label for="alamat_rt" class="col-form-label">Rt/Rw:</label>
                         <div class="d-flex flex-row gap-2">
-                            <input type="number" class="form-control w-50" id="alamat_rt" name="alamat_rt" value="<?= $penduduk['alamat_rt'] ?>" <?= $inputAttribute ?>>
-                            <input type="number" class="form-control w-50" id="alamat_rw" name="alamat_rw" value="<?= $penduduk['alamat_rw'] ?>" <?= $inputAttribute ?>>
+                            <input type="number" class="form-control text-uppercase w-50" id="alamat_rt" name="alamat_rt" value="<?= $penduduk['alamat_rt'] ?>" <?= $inputAttribute ?>>
+                            <input type="number" class="form-control text-uppercase w-50" id="alamat_rw" name="alamat_rw" value="<?= $penduduk['alamat_rw'] ?>" <?= $inputAttribute ?>>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="alamat_kel-desa" class="col-form-label">Kelurahan/Desa:</label>
-                        <input type="text" class="form-control" id="alamat_kel-desa" name="alamat_kel_desa" value="<?= $penduduk['alamat_kel_desa'] ?>" <?= $inputAttribute ?>>
+                        <input type="text" class="form-control text-uppercase" id="alamat_kel-desa" name="alamat_kel_desa" value="<?= $penduduk['alamat_kel_desa'] ?>" <?= $inputAttribute ?>>
                     </div>
                     <div class="form-group">
                         <label for="alamat_kecamatan" class="col-form-label">Kecamatan:</label>
-                        <input type="text" class="form-control" id="alamat_kecamatan" name="alamat_kecamatan" value="<?= $penduduk['alamat_kecamatan'] ?>" <?= $inputAttribute ?>>
+                        <input type="text" class="form-control text-uppercase" id="alamat_kecamatan" name="alamat_kecamatan" value="<?= $penduduk['alamat_kecamatan'] ?>" <?= $inputAttribute ?>>
                     </div>
                     <div class="p-2"></div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="agama" class="col-form-label">Agama:</label>
-                <select id="agama" name="agama" class="form-control" <?= $inputAttribute ?>>
+                <select id="agama" name="agama" class="form-control text-uppercase" <?= $inputAttribute ?>>
                     <option <?= atOption($penduduk['agama'], "ISLAM") ?>>ISLAM</option>
                     <option <?= atOption($penduduk['agama'], "KRISTEN") ?>>KRISTEN</option>
                     <option <?= atOption($penduduk['agama'], "HINDU") ?>>HINDU</option>
@@ -285,7 +285,7 @@ $pendudukList = loadPenduduk($page['cur'], $search);
             </div>
             <div class="form-group">
                 <label for="status_perkawinan" class="col-form-label">Status Perkawinan:</label>
-                <select id="status_perkawinan" name="status_perkawinan" class="form-control" <?= $inputAttribute ?>>
+                <select id="status_perkawinan" name="status_perkawinan" class="form-control text-uppercase" <?= $inputAttribute ?>>
                     <option <?= atOption($penduduk['status_perkawinan'], "BELUM KAWIN") ?>>BELUM KAWIN</option>
                     <option <?= atOption($penduduk['status_perkawinan'], "KAWIN") ?>>KAWIN</option>
                     <option <?= atOption($penduduk['status_perkawinan'], "CERAI HIDUP") ?>>CERAI HIDUP</option>
@@ -294,7 +294,7 @@ $pendudukList = loadPenduduk($page['cur'], $search);
             </div>
             <div class="form-group">
                 <label for="pekerjaan" class="col-form-label">Pekerjaan:</label>
-                <select id="pekerjaan" name="pekerjaan" class="form-control" <?= $inputAttribute ?>>
+                <select id="pekerjaan" name="pekerjaan" class="form-control text-uppercase" <?= $inputAttribute ?>>
                     <option <?= atOption($penduduk['pekerjaan'], "BELUM/TIDAK BEKERJA") ?>>BELUM/TIDAK BEKERJA</option>
                     <option <?= atOption($penduduk['pekerjaan'], "PELAJAR/MAHASISWA") ?>>PELAJAR/MAHASISWA</option>
                     <option <?= atOption($penduduk['pekerjaan'], "KARYAWAN SWASTA") ?>>KARYAWAN SWASTA</option>
@@ -303,7 +303,7 @@ $pendudukList = loadPenduduk($page['cur'], $search);
             </div>
             <div class="form-group">
                 <label for="kewarganegaraan" class="col-form-label">Kewarganegaraan:</label>
-                <select id="kewarganegaraan" name="kewarganegaraan" class="form-control" <?= $inputAttribute ?>>
+                <select id="kewarganegaraan" name="kewarganegaraan" class="form-control text-uppercase" <?= $inputAttribute ?>>
                     <option <?= atOption($penduduk['kewarganegaraan'], "WNI") ?>>WNI</option>
                     <option <?= atOption($penduduk['kewarganegaraan'], "WNA") ?>>WNA</option>
                 </select>
