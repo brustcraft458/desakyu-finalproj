@@ -2,6 +2,7 @@
 require './config/db.php';
 require_once "./component/chart.php";
 require_once "./component/sidebar.php";
+require_once "./component/table.php";
 require_once "./backend/function.php";
 require_once "./backend/query.php";
 require_once "./backend/table-penduduk.php";
@@ -21,8 +22,8 @@ if ($aksi_state) {
 }
 
 // Table
-$page = getPage();
 $search = getSearchBox();
+$page = getPage($search);
 $pendudukList = loadPenduduk($page['cur'], $search);
 ?>
 
@@ -62,7 +63,7 @@ $pendudukList = loadPenduduk($page['cur'], $search);
 
                 <form action="" method="POST" class="navbar-search mt-3 px-3 w-25">
                     <div class="input-group">
-                        <input type="text" name="data" class="form-control bg-light border-0 small" placeholder="Cari untuk...">
+                        <input type="text" name="data" class="form-control bg-light border-0 small" placeholder="Cari untuk..." value="<?= $search ?>">
                         
                         <button class="btn btn-primary" type="submit" name="search">
                             <i class="ri-search-line"></i>
@@ -156,27 +157,7 @@ $pendudukList = loadPenduduk($page['cur'], $search);
                 <div class="d-flex justify-content-between p-3">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-form">Tambah Data</button>
                     <nav aria-label="Page navigation example" style="height: 38px">
-                        <ul class="pagination">
-                            <?php if ($page['cur'] > 1) :?>
-                                <li class="page-item"><a class="page-link" href="?page=<?= $page['cur'] - 1 ?>"><<</a></li>
-                            <?php else : ?>
-                                <li class="page-item"><a class="page-link disabled" href=""><<</a></li>
-                            <?php endif ?>
-
-                            <?php for ($i = $page['cur']; $i < $page['cur'] + 4 ; $i++) :?>
-                                <?php if ($i <= $page['max']) : ?>
-                                    <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i?></a></li>
-                                <?php else :?>
-                                    <li class="page-item disabled"><a class="page-link" href="#"><?= $i?></a></li>
-                                <?php endif ?>
-                            <?php endfor ?>
-
-                            <?php if ($page['cur'] <= $page['max'] - 1) :?>
-                                <li class="page-item"><a class="page-link" href="?page=<?= $page['cur'] + 1 ?>">>></a></li>
-                            <?php else :?>
-                                <li class="page-item"><a class="page-link disabled" href="#">>></a></li>
-                            <?php endif ?>
-                        </ul>
+                        <?php Table::pagination($page['cur'], $page['max']) ?>
                     </nav>
                 </div>
 

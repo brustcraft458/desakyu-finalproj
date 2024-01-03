@@ -19,8 +19,7 @@ class Sidebar {
                 "dashboard" => ["Dashboard", "ri-dashboard-2-line"],
                 "table-penduduk" => ["Data Penduduk", "ri-table-line"],
                 "surat" => ["Layanan Surat", "ri-mail-line"],
-                "laporan" => ["Laporan", "ri-file-text-line"],
-                "table-master" => ["Master Data", "ri-dashboard-2-line"]
+                "laporan" => ["Laporan", "ri-file-text-line"]
             ];
         }
 
