@@ -22,9 +22,7 @@ if ($aksi_state) {
 }
 
 // Table
-$search = getSearchBox();
-$page = getPage($search);
-$pendudukList = loadPenduduk($page['cur'], $search);
+$pendudukList = TablePenduduk::loadTable();
 ?>
 
 <!DOCTYPE html>
@@ -63,11 +61,7 @@ $pendudukList = loadPenduduk($page['cur'], $search);
 
                 <form action="" method="POST" class="navbar-search mt-3 px-3 w-25">
                     <div class="input-group">
-                        <input type="text" name="data" class="form-control bg-light border-0 small" placeholder="Cari untuk..." value="<?= $search ?>">
-                        
-                        <button class="btn btn-primary" type="submit" name="search">
-                            <i class="ri-search-line"></i>
-                        </button>
+                        <?php TablePenduduk::searchBox() ?>
                     </div>
                 </form>
 
@@ -157,7 +151,7 @@ $pendudukList = loadPenduduk($page['cur'], $search);
                 <div class="d-flex justify-content-between p-3">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-form">Tambah Data</button>
                     <nav aria-label="Page navigation example" style="height: 38px">
-                        <?php Table::pagination($page['cur'], $page['max']) ?>
+                        <?php Table::pagination() ?>
                     </nav>
                 </div>
 

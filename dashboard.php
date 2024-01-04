@@ -7,6 +7,7 @@ require_once "./backend/statistic.php";
 require_once "./backend/dashboard.php";
 
 $totalPenduduk = StatisticDash::getTotalPenduduk();
+$totalSuratPending = StatisticDash::getTotalSuratPending();
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +62,7 @@ $totalPenduduk = StatisticDash::getTotalPenduduk();
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Surat Pending</p>
-                                    <p class="h5 mb-0 font-weight-bold text-gray-800">100</p>
+                                    <p class="h5 mb-0 font-weight-bold text-gray-800"><?= $totalSuratPending ?></p>
                                 </div>
                                 <div class="col-auto">
                                     <i class="ri-mail-open-fill ri-2x text-gray-300"></i>

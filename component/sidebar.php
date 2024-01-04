@@ -18,9 +18,14 @@ class Sidebar {
             self::$menuList = [
                 "dashboard" => ["Dashboard", "ri-dashboard-2-line"],
                 "table-penduduk" => ["Data Penduduk", "ri-table-line"],
-                "surat" => ["Layanan Surat", "ri-mail-line"],
+                "table-surat" => ["Layanan Surat", "ri-mail-line"],
                 "laporan" => ["Laporan", "ri-file-text-line"]
             ];
+        }
+
+        if (!array_key_exists($select, self::$menuList)) {
+            header("Location: login.php");
+            die;
         }
 
         return sidebarElement($select, self::$menuList, $username);
