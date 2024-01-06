@@ -1,3 +1,7 @@
+function isEmpty(str) {
+    return (str.trim() == '')
+}
+
 function debounce(func, delay) {
     let timerId;
     return function(...args) {

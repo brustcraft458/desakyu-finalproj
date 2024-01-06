@@ -3,13 +3,19 @@ require './config/db.php';
 require_once "./backend/function.php";
 require_once "./backend/query.php";
 require_once "./backend/layanan.php";
+require_once "./backend/aksi-layanan.php";
 
-if (isset($_GET['fill-surat-keterangan-usaha'])) {
-    $target = "surat-keterangan-usaha";
+if (isset($_GET['fill-surat'])) {
+    $target = $_GET['fill-surat'];
 
     $dataSurat = suratFill($target);
     elementSuratForm($target, $dataSurat);
     exit;
+} else if (isset($_POST['send-surat'])) {
+    $target = $_POST['send-surat'];
+    
+    sendSurat($target);
+    header("Location: layanan.php");
 }
 
 ?>
@@ -138,14 +144,12 @@ if (isset($_GET['fill-surat-keterangan-usaha'])) {
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary" name="send-pesan">Kirim</button> -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Modal Surat Keterangan Usaha -->
+        <!-- Modal Surat Keterangan Usaha Dalam -->
         <div class="modal fade" id="skud-form" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <form action="" method="POST" class="modal-content">
@@ -157,29 +161,26 @@ if (isset($_GET['fill-surat-keterangan-usaha'])) {
                     </div>
                     <div class="modal-body">
                         <div>
-                            <div style="display: none">
-                                <input type="hidden" class="form-control text-uppercase" id="id_penduduk" name="id_penduduk">
-                            </div>
                             <div class="form-group">
                                 <label for="nik" class="col-form-label">NIK:</label>
-                                <div class="d-flex flex-row align-items-center">
-                                    <input type="number" class="form-control text-uppercase" id="input-surat-keterangan-usaha-nik" name="nik">
-                                    <div class="mx-2"><i class="ri-check-double-line ri-xl text-primary"></i></div>
+                                <div class="d-flex flex-row align-items-center" id="fgroup-surat-keterangan-usaha-dalam-nik">
+                                    <input type="number" class="form-control text-uppercase" id="nik" name="nik">
+                                    <div class="check-status mx-2"></div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="nama" class="col-form-label">Nama:</label>
-                                <div class="d-flex flex-row align-items-center">
-                                    <input type="text" class="form-control text-uppercase" id="input-surat-keterangan-usaha-nama" name="nama">
-                                    <div class="mx-2"><i class="ri-check-double-line ri-xl text-primary"></i></div>
+                                <label for="nama" class="col-form-label">Nama Lengkap:</label>
+                                <div class="d-flex flex-row align-items-center" id="fgroup-surat-keterangan-usaha-dalam-nama">
+                                    <input type="text" class="form-control text-uppercase" id="nama" name="nama">
+                                    <div class="check-status mx-2"></div>
                                 </div>
                             </div>
-                            <?php elementSuratFill("surat-keterangan-usaha"); ?>
+                            <?php elementSuratFill("surat-keterangan-usaha-dalam"); ?>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary" name="send-pesan">Kirim</button>
+                        <button type="submit" class="btn btn-primary" name="send-surat" value="surat-keterangan-usaha-dalam">Kirim</button>
                     </div>
                 </form>
             </div>
@@ -212,8 +213,6 @@ if (isset($_GET['fill-surat-keterangan-usaha'])) {
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary" name="send-pesan">Kirim</button> -->
                     </div>
                 </div>
             </div>
@@ -235,14 +234,22 @@ if (isset($_GET['fill-surat-keterangan-usaha'])) {
     <script>
         const url = './layanan.php'
         const target = "<?= $target ?>"
-        const input = document.querySelector(`#input-${target}-nik`)
-        const parrent = document.querySelector(`#fill-${target}`)
 
-        input.addEventListener("input", debounce(async(event) => {
-            let value = event.target.value
+        const elmntNik = document.querySelector(`#fgroup-${target}-nik`)
+        const elmntNama = document.querySelector(`#fgroup-${target}-nama`)
+        const inputNik = elmntNik.querySelector("input")
+        const inputNama = elmntNama.querySelector("input")
+        const statusNik = elmntNik.querySelector(".check-status")
+        const statusNama = elmntNama.querySelector(".check-status")
+        const parrent = document.querySelector(`#fill-${target}`)
+        
+        const fillForm = async() => {
+            let nik = inputNik.value
+            let nama = inputNama.value
             let formData = new FormData()
-            formData.append('nik', value)
-            formData.append(`fill-${target}`, '')
+            formData.append('nik', nik)
+            formData.append('nama', nama)
+            formData.append(`fill-surat`, target)
 
             const param = new URLSearchParams(formData);
 
@@ -250,30 +257,62 @@ if (isset($_GET['fill-surat-keterangan-usaha'])) {
                 `${url}?${param}`, 
                 {method: 'GET'}
             )
-
-
-            // Send
-            //let resp = await fetch(url, { method: 'GET', body: formData })
             
             // Get
             resp = await resp.text()
-            console.log(resp)
+
+            if (!isEmpty(resp)) {
+                statusNik.innerHTML = "<i class='ri-check-line ri-xl'></i>"
+                statusNama.innerHTML = "<i class='ri-check-line ri-xl'></i>"
+            } else {
+                statusNik.innerHTML = ""
+                statusNama.innerHTML = ""
+            }
             parrent.innerHTML = resp
-        }, 500))
+        }
+
+        inputNik.addEventListener("input", debounce(fillForm, 500))
+        inputNama.addEventListener("input", debounce(fillForm, 500))
     </script>
 <?php } ?>
 
 <?php function elementSuratForm($target, $data = []) {?>
     <?php
     if (!$data) {
-        $data = arrayAssocFill(["nama"], "");
+        $data = arrayAssocFill(["id_penduduk", "jenis_kelamin", "tempat_lahir", "tanggal_lahir", "agama", "pekerjaan", "alamat"], "");
     }
     ?>
 
-    <?php if ($target == "surat-keterangan-usaha") :?>
+    <?php if ($target == "surat-keterangan-usaha-dalam") :?>
+        <div style="display: none;">
+            <input type="hidden" class="form-control text-uppercase" id="id_penduduk" name="id_penduduk" value="<?= $data['id_penduduk']?>">
+        </div>
         <div class="form-group">
-            <label for="nama" class="col-form-label">Nama:</label>
-            <input type="text" class="form-control text-uppercase" id="nama" name="nama" value="<?= $data['nama'] ?>">
+            <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin:</label>
+            <input type="text" class="form-control text-uppercase w-50" id="jenis_kelamin" name="jenis_kelamin" value="<?= $data['jenis_kelamin'] ?>" disabled>
+        </div>
+        <div class="form-group">
+            <label for="tempat_lahir" class="col-form-label">Tempat, Tanggal Lahir:</label>
+            <div class="d-flex flex-row gap-2">
+                <input type="text" class="form-control text-uppercase w-50" id="tempat_lahir" name="tempat_lahir" value="<?= $data['tempat_lahir'] ?>" disabled>
+                <input type="date" class="form-control text-uppercase" id="tanggal_lahir" name="tanggal_lahir" value="<?= $data['tanggal_lahir'] ?>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="agama" class="col-form-label">Agama:</label>
+            <input type="text" class="form-control text-uppercase" id="agama" name="agama" value="<?= $data['agama'] ?>" disabled>
+        </div>
+        <div class="form-group">
+            <label for="pekerjaan" class="col-form-label">Pekerjaan:</label>
+            <input type="text" class="form-control text-uppercase" id="pekerjaan" name="pekerjaan" value="<?= $data['pekerjaan'] ?>" disabled>
+        </div>
+        <div class="form-group">
+            <label for="alamat" class="col-form-label">Alamat:</label>
+            <input type="text" class="form-control text-uppercase" id="alamat" name="alamat" value="<?= $data['alamat'] ?>">
+        </div>
+        <div class="form-group">
+            <label for="nama_usaha" class="col-form-label">Nama Usaha:</label>
+            <input type="text" class="form-control text-uppercase" id="nama_usaha" name="nama_usaha" value="">
         </div>
     <?php endif; ?>
 <?php } ?>

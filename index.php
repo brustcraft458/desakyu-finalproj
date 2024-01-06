@@ -12,7 +12,7 @@
 <body>
     <header>
         <div class="background-img mix-black">
-            <img src="./img/sukharja-orang.png">
+            <img src="./img/sukharja-orang.jpg">
         </div>
         <nav class="navbar">
             <div class="logo small">
