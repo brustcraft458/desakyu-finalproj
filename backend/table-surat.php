@@ -40,7 +40,7 @@ class TableSurat extends Table {
             // Search
             $query = new Query(
                 "SELECT
-                    penduduk.id_penduduk, nama, nik, jenis, status_pengajuan
+                    id_surat, nama, nik, jenis, status_pengajuan
                 FROM surat
                     INNER JOIN penduduk ON surat.id_penduduk = penduduk.id_penduduk
                 WHERE
@@ -58,7 +58,7 @@ class TableSurat extends Table {
             // Default
             $query = new Query(
                 "SELECT
-                    penduduk.id_penduduk, nama, nik, jenis, status_pengajuan
+                    id_surat, nama, nik, jenis, status_pengajuan
                 FROM surat
                     INNER JOIN penduduk ON surat.id_penduduk = penduduk.id_penduduk
                 WHERE

@@ -3,12 +3,13 @@ require './config/db.php';
 require_once "./component/chart.php";
 require_once "./component/sidebar.php";
 require_once "./component/table.php";
+require_once "./component/surat.php";
 require_once "./backend/function.php";
 require_once "./backend/query.php";
 require_once "./backend/table-surat.php";
 require_once "./backend/aksi-surat.php";
 
-// Aksi
+// Aksi Surat
 if (isset($_POST['disetujui-surat'])) {
     accStatusSurat("DISETUJUI");
 } elseif (isset($_POST['ditolak-surat'])) {
@@ -17,6 +18,13 @@ if (isset($_POST['disetujui-surat'])) {
     printSurat();
 } elseif (isset($_POST['delete-surat'])) {
     deleteSurat();
+}
+
+if (isset($_GET['fill-surat'])) {
+    Surat::fill($_GET['fill-surat']);
+    exit;
+} else if (isset($_POST['send-surat'])) {
+    Surat::send($_POST['send-surat']);
 }
 
 if ($aksi_state) {
@@ -42,6 +50,7 @@ $suratList = TableSurat::loadTable();
 <body>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./function.js"></script>
 
     <main class="d-flex flex-row">
         <!-- Sidebar -->
@@ -126,7 +135,7 @@ $suratList = TableSurat::loadTable();
                                     <div class="modal-body">
                                         <div>
                                             <div style="display: none">
-                                                <input type="hidden" class="form-control text-uppercase" id="id_penduduk" name="id_penduduk" value="<?= $surat['id_penduduk'] ?>">
+                                                <input type="hidden" class="form-control text-uppercase" id="id_surat" name="id_surat" value="<?= $surat['id_surat'] ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -151,7 +160,7 @@ $suratList = TableSurat::loadTable();
                                     <div class="modal-body">
                                         <div>
                                             <div style="display: none">
-                                                <input type="hidden" class="form-control text-uppercase" id="id_penduduk" name="id_penduduk" value="<?= $surat['id_penduduk'] ?>">
+                                                <input type="hidden" class="form-control text-uppercase" id="id_surat" name="id_surat" value="<?= $surat['id_surat'] ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -176,7 +185,7 @@ $suratList = TableSurat::loadTable();
                                     <div class="modal-body">
                                         <div>
                                             <div style="display: none">
-                                                <input type="hidden" class="form-control text-uppercase" id="id_penduduk" name="id_penduduk" value="<?= $surat['id_penduduk'] ?>">
+                                                <input type="hidden" class="form-control text-uppercase" id="id_surat" name="id_surat" value="<?= $surat['id_surat'] ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -191,7 +200,7 @@ $suratList = TableSurat::loadTable();
                 </div>
                 
                 <div class="d-flex justify-content-between p-3">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-form">Tambah Surat</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#surat-form">Tambah Surat</button>
                     <nav aria-label="Page navigation example" style="height: 38px">
                         <?php Table::pagination() ?>
                     </nav>
@@ -203,24 +212,8 @@ $suratList = TableSurat::loadTable();
         </div>
     </main>
 
-    <!-- Modal Tambah Penduduk -->
-    <div class="modal fade" id="add-form" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form action="" method="POST" class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Input Data Penduduk</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <?php elementFormSurat(); ?>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary" name="add-penduduk">Tambah</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <!-- Modal Surat -->
+    <?php Surat::modal() ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
@@ -229,19 +222,3 @@ $suratList = TableSurat::loadTable();
 </body>
 
 </html>
-
-<?php function elementFormSurat($penduduk = [], $inputAttribute = "") {?>
-    <?php
-    if (!$penduduk) {
-        $penduduk = arrayAssocFill(["id_penduduk", "nik", "nama", "tempat_lahir", "tanggal_lahir", "jenis_kelamin", "alamat", "alamat_rt", "alamat_rw", "alamat_kel_desa", "alamat_kecamatan", "agama", "status_perkawinan", "pekerjaan", "kewarganegaraan"], "");
-    }
-    ?>
-
-    <div class="modal-body">
-        <div>
-            <div style="display: none">
-                <input type="hidden" class="form-control text-uppercase" id="id_penduduk" name="id_penduduk" value="<?= $penduduk['id_penduduk'] ?>">
-            </div>
-        </div>
-    </div>
-<?php } ?>
