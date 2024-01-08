@@ -1,10 +1,12 @@
 <?php
 require './config/db.php';
 require_once "./component/surat.php";
+require_once "./component/saran.php";
 require_once "./backend/function.php";
 require_once "./backend/query.php";
 require_once "./backend/layanan.php";
 require_once "./backend/aksi-surat.php";
+require_once "./backend/aksi-saran.php";
 
 // Aksi Surat
 if (isset($_GET['fill-surat'])) {
@@ -12,6 +14,14 @@ if (isset($_GET['fill-surat'])) {
     exit;
 } else if (isset($_POST['send-surat'])) {
     Surat::send($_POST['send-surat']);
+} else if (isset($_GET['fill-saran'])) {
+    Saran::fill($_GET['fill-saran']);
+    exit;
+} else if (isset($_POST['send-saran'])) {
+    Saran::send($_POST['send-saran']);
+}
+
+if ($aksi_state) {
     header("Location: layanan.php");
 }
 
@@ -88,7 +98,7 @@ if (isset($_GET['fill-surat'])) {
                     </div>
                     <div class="card-body">
                         <i class="ri-feedback-line ri-7x"></i>
-                        <button type="button" class="w-100 btn btn-lg btn-outline-primary">Ajukan</button>
+                        <button type="button" class="w-100 btn btn-lg btn-outline-primary" data-bs-toggle="modal" data-bs-target="#saran-form">Ajukan</button>
                     </div>
                 </div>
             </div>
@@ -128,6 +138,9 @@ if (isset($_GET['fill-surat'])) {
                 </div>
             </div>
         </div>
+
+        <!-- Modal Saran -->
+        <?php Saran::modal() ?>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

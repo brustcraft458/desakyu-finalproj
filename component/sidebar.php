@@ -14,12 +14,22 @@ class Sidebar {
         // Menu
         if ($role == "warga") {
             self::$menuList =  ["dashboard" => ["Dashboard", "ri-dashboard-2-line"]];
-        } elseif ($role == "admin_rt" || $role == "admin_desa" || $role == "admin_super") {
+        } elseif ($role == "admin_rt" || $role == "admin_desa") {
             self::$menuList = [
                 "dashboard" => ["Dashboard", "ri-dashboard-2-line"],
                 "table-penduduk" => ["Data Penduduk", "ri-table-line"],
                 "table-surat" => ["Layanan Surat", "ri-mail-line"],
-                "laporan" => ["Laporan", "ri-file-text-line"]
+                "table-laporan" => ["Layanan Laporan", "ri-file-text-line"],
+                "table-saran" => ["Saran", "ri-chat-quote-line"]
+            ];
+        } elseif ($role == "admin_super") {
+            self::$menuList = [
+                "dashboard" => ["Dashboard", "ri-dashboard-2-line"],
+                "table-penduduk" => ["Data Penduduk", "ri-table-line"],
+                "table-surat" => ["Layanan Surat", "ri-mail-line"],
+                "table-laporan" => ["Layanan Laporan", "ri-file-text-line"],
+                "table-saran" => ["Saran", "ri-chat-quote-line"],
+                "table-user" => ["Kelola User", "ri-user-settings-line"]
             ];
         }
 

@@ -4,6 +4,7 @@ class Query {
     private $presql;
     public $state = false;
     public $message = ""; // fail_query | fail_nodata | succes_nodata | succes_data
+    public $duplicate = false;
     private $data = [];
 
     public function __construct($sql) {
@@ -19,8 +20,28 @@ class Query {
         $this->presql = $db_connect->prepare($sql);
     }
 
+    public function checkDuplicate($sqld, $data) {
+        // No Duplicate
+        $queryc = new Query($sqld);
+        $queryc->execute($data);
+
+        $count = $queryc->getData()['count'];
+        if ($count > 0) {
+            $this->duplicate = true;
+            return;
+        }
+        
+        $this->duplicate = false;
+    }
+
     public function execute($params = []) {
         // Check
+        if ($this->duplicate) {
+            $this->state = false;
+            $this->message = "fail_duplicate";
+            return;
+        }
+
         if (!$this->presql) {
             $this->state = false;
             $this->message = "fail_query";

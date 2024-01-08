@@ -44,6 +44,7 @@ $suratList = TableSurat::loadTable();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.7.0/remixicon.min.css" integrity="sha512-9dM+qk2jOZSKUQwjFh8iOtYvIoz3HidudalPDswePq12rBzkbVAQYqb1lrASFwocSLSUJ5TqNQ6xgNuOFSfT6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="./img/head-icon.png" type="image/x-icon">
     <title>Document</title>
 </head>
 
@@ -104,13 +105,22 @@ $suratList = TableSurat::loadTable();
                                     <td><?= $surat['nik']?></td>
                                     <td><?= $surat['jenis']?></td>
                                     <td><?= $surat['status_pengajuan']?></td>
-                                    <td style="display: flex; justify-content: space-around;">
-                                        <?php if ($surat['status_pengajuan'] == "DIAJUKAN") :?>
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#disetujui-form-<?= $count ?>"><i class="ri-check-line"></i></button>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ditolak-form-<?= $count ?>"><i class="ri-close-line"></i></button>
+                                    <td class="d-flex justify-content-around">
+                                        <?php if ($_SESSION['role'] == 'admin_desa') :?>
+                                            <?php if ($surat['status_pengajuan'] == "DIAJUKAN") :?>
+                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#disetujui-form-<?= $count ?>"><i class="ri-check-line"></i></button>
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ditolak-form-<?= $count ?>"><i class="ri-close-line"></i></button>
+                                            <?php else:?>
+                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#print-form-<?= $count ?>"><i class="ri-printer-fill"></i></button>
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-form-<?= $count ?>"><i class="ri-delete-bin-2-fill"></i></button>
+                                            <?php endif;?>
                                         <?php else:?>
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#print-form-<?= $count ?>"><i class="ri-printer-fill"></i></button>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-form-<?= $count ?>"><i class="ri-delete-bin-2-fill"></i></button>
+                                            <?php if ($surat['status_pengajuan'] == "DIAJUKAN") :?>
+                                                <button type="button" class="btn btn-secondary disabled" disabled><i class="ri-printer-fill"></i></button>
+                                            <?php else:?>
+                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#print-form-<?= $count ?>"><i class="ri-printer-fill"></i></button>
+                                            <?php endif;?>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info-form-<?= $count ?>"><i class="ri-information-2-fill"></i></button>
                                         <?php endif;?>
                                     </td>
                                 </tr>

@@ -72,6 +72,8 @@ $pendudukList = TablePenduduk::loadTable();
                                 <p class="alert alert-danger">Query database gagal</p>
                             <?php elseif ($aksi_message == "fail_emptydata") : ?>
                                 <p class="alert alert-danger">Input Data tidak boleh kosong</p>
+                            <?php elseif ($aksi_message == "fail_duplicate") : ?>
+                                <p class="alert alert-danger">Input Data tidak boleh sama</p>
                             <?php endif ?>
                         <?php else : ?>
                         <?php endif ?>
@@ -95,7 +97,7 @@ $pendudukList = TablePenduduk::loadTable();
                                     <td><?= $penduduk['jenis_kelamin']?></td>
                                     <td><?= $penduduk['status_perkawinan']?></td>
                                     <td><?= $penduduk['pekerjaan']?></td>
-                                    <td style="display: flex; justify-content: space-around;">
+                                    <td class="d-flex justify-content-around">
                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit-form-<?= $count ?>"><i class="ri-pencil-fill"></i></button>
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-form-<?= $count ?>"><i class="ri-delete-bin-2-fill"></i></button>
                                     </td>
@@ -191,7 +193,10 @@ $pendudukList = TablePenduduk::loadTable();
 <?php function elementFormPenduduk($penduduk = [], $inputAttribute = "") {?>
     <?php
     if (!$penduduk) {
-        $penduduk = arrayAssocFill(["id_penduduk", "nik", "nama", "tempat_lahir", "tanggal_lahir", "jenis_kelamin", "alamat", "alamat_rt", "alamat_rw", "alamat_kel_desa", "alamat_kecamatan", "agama", "status_perkawinan", "pekerjaan", "kewarganegaraan"], "");
+        $penduduk = arrayAssocFill(["id_penduduk", "nik", "nama", "tempat_lahir", "tanggal_lahir", "jenis_kelamin", "alamat", "alamat_rt", "alamat_rw", "alamat_kel_desa", "alamat_kecamatan", "alamat_kabupaten", "agama", "status_perkawinan", "pekerjaan", "kewarganegaraan"], "");
+        $penduduk['alamat_kel_desa'] = "SUKAHARJA";
+        $penduduk['alamat_kecamatan'] = "TELUKJAMBE TIMUR";
+        $penduduk['alamat_kabupaten'] = "KARAWANG";
     }
     ?>
 
@@ -243,6 +248,10 @@ $pendudukList = TablePenduduk::loadTable();
                     <div class="form-group">
                         <label for="alamat_kecamatan" class="col-form-label">Kecamatan:</label>
                         <input type="text" class="form-control text-uppercase" id="alamat_kecamatan" name="alamat_kecamatan" value="<?= $penduduk['alamat_kecamatan'] ?>" <?= $inputAttribute ?>>
+                    </div>
+                    <div class="form-group">
+                        <label for="alamat_kabupaten" class="col-form-label">Kabupaten:</label>
+                        <input type="text" class="form-control text-uppercase" id="alamat_kabupaten" name="alamat_kabupaten" value="<?= $penduduk['alamat_kabupaten'] ?>" <?= $inputAttribute ?>>
                     </div>
                     <div class="p-2"></div>
                 </div>
