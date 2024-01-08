@@ -9,6 +9,9 @@ require_once "./backend/query.php";
 require_once "./backend/table-saran.php";
 require_once "./backend/aksi-saran.php";
 
+// Init
+Sidebar::selection("table-saran");
+
 // Aksi Saran
 if (isset($_POST['delete-saran'])) {
     deleteSaran();
@@ -49,7 +52,7 @@ $saranList = TableSaran::loadTable();
 
     <main class="d-flex flex-row">
         <!-- Sidebar -->
-        <?php Sidebar::selection("table-saran") ?>
+        <?php Sidebar::render() ?>
     
         <!-- Dashboard -->
         <div class="container-fluid px-5 py-3">
@@ -139,7 +142,7 @@ $saranList = TableSaran::loadTable();
                 </div>
                 
                 <div class="d-flex justify-content-between p-3">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#saran-form">Tambah Saran</button>
+                    <div></div>
                     <nav aria-label="Page navigation example" style="height: 38px">
                         <?php Table::pagination() ?>
                     </nav>

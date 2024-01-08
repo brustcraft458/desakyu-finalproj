@@ -1,20 +1,23 @@
 <?php
 class Sidebar {
     static $menuList = [];
+    static $username = "";
+    static $select = "";
+    static $role = "";
+    
     static public function selection($select) {
-        $username = "";
-        $role = "";
         if (isset($_SESSION['username'])) {
-            $username = $_SESSION['username'];
+            self::$username = $_SESSION['username'];
         }
         if (isset($_SESSION['role'])) {
-            $role = $_SESSION['role'];
+            self::$role = $_SESSION['role'];
         }
+        self::$select = $select;
 
         // Menu
-        if ($role == "warga") {
+        if (self::$role == "warga") {
             self::$menuList =  ["dashboard" => ["Dashboard", "ri-dashboard-2-line"]];
-        } elseif ($role == "admin_rt" || $role == "admin_desa") {
+        } elseif (self::$role == "admin_rt" || self::$role == "admin_desa") {
             self::$menuList = [
                 "dashboard" => ["Dashboard", "ri-dashboard-2-line"],
                 "table-penduduk" => ["Data Penduduk", "ri-table-line"],
@@ -22,7 +25,7 @@ class Sidebar {
                 "table-laporan" => ["Layanan Laporan", "ri-file-text-line"],
                 "table-saran" => ["Saran", "ri-chat-quote-line"]
             ];
-        } elseif ($role == "admin_super") {
+        } elseif (self::$role == "admin_super") {
             self::$menuList = [
                 "dashboard" => ["Dashboard", "ri-dashboard-2-line"],
                 "table-penduduk" => ["Data Penduduk", "ri-table-line"],
@@ -33,12 +36,14 @@ class Sidebar {
             ];
         }
 
-        if (!array_key_exists($select, self::$menuList)) {
+        if (!array_key_exists(self::$select, self::$menuList)) {
             header("Location: login.php");
             die;
         }
+    }
 
-        return sidebarElement($select, self::$menuList, $username);
+    static public function render() {
+        return sidebarElement(self::$select, self::$menuList, self::$username);
     }
 }
 ?>

@@ -8,6 +8,9 @@ require_once "./backend/query.php";
 require_once "./backend/table-user.php";
 require_once "./backend/aksi-user.php";
 
+// Init
+Sidebar::selection("table-user");
+
 // Aksi
 if (isset($_POST['add-user'])) {
     addUser();
@@ -43,7 +46,7 @@ $userList = TableUser::loadTable();
 
     <main class="d-flex flex-row">
         <!-- Sidebar -->
-        <?php Sidebar::selection("table-user") ?>
+        <?php Sidebar::render() ?>
     
         <!-- Dashboard -->
         <div class="container-fluid px-5 py-3">

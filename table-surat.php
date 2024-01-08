@@ -9,6 +9,9 @@ require_once "./backend/query.php";
 require_once "./backend/table-surat.php";
 require_once "./backend/aksi-surat.php";
 
+// Init
+Sidebar::selection("table-surat");
+
 // Aksi Surat
 if (isset($_POST['disetujui-surat'])) {
     accStatusSurat("DISETUJUI");
@@ -55,7 +58,7 @@ $suratList = TableSurat::loadTable();
 
     <main class="d-flex flex-row">
         <!-- Sidebar -->
-        <?php Sidebar::selection("table-surat") ?>
+        <?php Sidebar::render() ?>
     
         <!-- Dashboard -->
         <div class="container-fluid px-5 py-3">

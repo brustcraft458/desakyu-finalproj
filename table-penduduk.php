@@ -8,6 +8,9 @@ require_once "./backend/query.php";
 require_once "./backend/table-penduduk.php";
 require_once "./backend/aksi-penduduk.php";
 
+// Init
+Sidebar::selection("table-penduduk");
+
 // Aksi
 if (isset($_POST['add-penduduk'])) {
     addPenduduk();
@@ -43,7 +46,7 @@ $pendudukList = TablePenduduk::loadTable();
 
     <main class="d-flex flex-row">
         <!-- Sidebar -->
-        <?php Sidebar::selection("table-penduduk") ?>
+        <?php Sidebar::render() ?>
     
         <!-- Dashboard -->
         <div class="container-fluid px-5 py-3">

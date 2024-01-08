@@ -6,6 +6,8 @@ require_once "./backend/query.php";
 require_once "./backend/statistic.php";
 require_once "./backend/dashboard.php";
 
+// Init
+Sidebar::selection("dashboard");
 $totalPenduduk = StatisticDash::getTotalPenduduk();
 $totalSuratPending = StatisticDash::getTotalSuratPending();
 ?>
@@ -28,7 +30,7 @@ $totalSuratPending = StatisticDash::getTotalSuratPending();
 
     <main class="d-flex flex-row">
         <!-- Sidebar -->
-        <?php Sidebar::selection("dashboard") ?>
+        <?php Sidebar::render() ?>
 
         <!-- Dashboard -->
         <div class="container-fluid px-5 py-3">
