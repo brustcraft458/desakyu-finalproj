@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
     <div class="background-img mix-white">
-        <img src="./img/sukharja-orang.png">
+        <img src="./img/sukharja-orang.jpg">
     </div>
     <form class="form" action="./login.php" method="post">
         <div class="side">

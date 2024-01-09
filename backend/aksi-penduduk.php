@@ -55,8 +55,9 @@ function editPenduduk() {
 
     // Update data
     $query = new Query("UPDATE penduduk SET nik = UPPER(?), nama = UPPER(?), tempat_lahir = UPPER(?), tanggal_lahir = UPPER(?), jenis_kelamin = UPPER(?), alamat = UPPER(?), alamat_rt = UPPER(?), alamat_rw = UPPER(?), alamat_kel_desa = UPPER(?), alamat_kecamatan = UPPER(?), alamat_kabupaten = UPPER(?), agama = UPPER(?), status_perkawinan = UPPER(?), pekerjaan = UPPER(?), kewarganegaraan = UPPER(?) WHERE id_penduduk = ?");
-    $query->checkDuplicate("SELECT count(id_penduduk) as count FROM penduduk WHERE status_deleted = 0 AND nik = ?", [
-        $_POST['nik']
+    $query->checkDuplicate("SELECT count(id_penduduk) as count FROM penduduk WHERE status_deleted = 0 AND nik = ? AND id_penduduk != ?", [
+        $_POST['nik'],
+        $_POST['id_penduduk']
     ]);
     $query->execute([
         $_POST['nik'],

@@ -80,7 +80,7 @@ $totalSuratPending = StatisticDash::getTotalSuratPending();
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Laporan Pending</p>
-                                    <p class="h5 mb-0 font-weight-bold text-gray-800">100</p>
+                                    <p class="h5 mb-0 font-weight-bold text-gray-800">0</p>
                                 </div>
                                 <div class="col-auto">
                                     <i class="ri-file-copy-2-fill ri-2x text-gray-300"></i>
@@ -92,28 +92,6 @@ $totalSuratPending = StatisticDash::getTotalSuratPending();
             </div>
 
             <!-- Content Row -->
-            <div class="d-flex flex-row gap-4">
-                <?php Chart::pie(
-                    "Hello World",
-                    "Kesejahteraan Hati",
-                    [
-                        "tes" => 20, "tes2" => 20, "tes3" => 50, "tes4" => 20
-                    ]
-                ) ?>
-                <?php Chart::bar(
-                    "Hello Dunia",
-                    "Hati Hati",
-                    [
-                        "Wakanda" => 20, "Isekai" => 60, "Konosi" => 50, "Waku" => 20
-                    ]
-                ) ?>
-                <?php Chart::progress(
-                    "Tesss",
-                    [
-                        "Hello" => 20, "Well" => 5
-                    ]
-                ) ?>
-            </div>
         </div>
     </main>
 

@@ -23,7 +23,7 @@ if (isset($_POST['register'])) {
 </head>
 <body>
     <div class="background-img mix-white">
-        <img src="./img/sukharja-orang.png">
+        <img src="./img/sukharja-orang.jpg">
     </div>
     <form class="form" action="./register.php" method="post">
         <div class="side">

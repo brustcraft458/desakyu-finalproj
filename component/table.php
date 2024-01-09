@@ -44,13 +44,15 @@ class Table {
         $elementItem = "";
 
         // Item
-        if (self::$total <= 10){  	 
-            for ($counter = 1; $counter <= self::$total; $counter++){
-                if ($counter == self::$page) {
-                    $elementItem .= "<li class='page-item active'><a class='page-link'>$counter</a></li>";
-                } else {
-                    $elementItem .= "<li class='page-item'><a class='page-link' href='?page=$counter'>$counter</a></li>";
-                }
+        for ($counter = 1; $counter <= self::$total; $counter++){
+            if ($counter > 7) {
+                break;
+            }
+            
+            if ($counter == self::$page) {
+                $elementItem .= "<li class='page-item active'><a class='page-link'>$counter</a></li>";
+            } else {
+                $elementItem .= "<li class='page-item'><a class='page-link' href='?page=$counter'>$counter</a></li>";
             }
         }
 

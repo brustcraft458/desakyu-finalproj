@@ -1,0 +1,5 @@
+RewriteEngine On
+
+# Disable access
+RewriteRule ^upload/ - [F]
+RewriteRule ^download/ - [F]

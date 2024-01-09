@@ -95,14 +95,19 @@ $pendudukList = TablePenduduk::loadTable();
                         <tbody>
                             <?php foreach ($pendudukList as $count => $penduduk) :?>
                                 <tr>
-                                    <td><?= ucwords($penduduk['nama'])?></td>
+                                    <td><?= $penduduk['nama']?></td>
                                     <td><?= $penduduk['nik']?></td>
                                     <td><?= $penduduk['jenis_kelamin']?></td>
                                     <td><?= $penduduk['status_perkawinan']?></td>
                                     <td><?= $penduduk['pekerjaan']?></td>
                                     <td class="d-flex justify-content-around">
-                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit-form-<?= $count ?>"><i class="ri-pencil-fill"></i></button>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-form-<?= $count ?>"><i class="ri-delete-bin-2-fill"></i></button>
+                                        <?php if ($_SESSION['role'] == "admin_desa") : ?>
+                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit-form-<?= $count ?>"><i class="ri-pencil-fill"></i></button>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-form-<?= $count ?>"><i class="ri-delete-bin-2-fill"></i></button>
+                                        <?php else: ?>
+                                            <button type="button" class="btn btn-secondary" disabled><i class="ri-pencil-fill"></i></button>
+                                            <button type="button" class="btn btn-secondary" disabled><i class="ri-delete-bin-2-fill"></i></button>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

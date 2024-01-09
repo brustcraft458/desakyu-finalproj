@@ -1,12 +1,17 @@
 <?php
 require './config/db.php';
 require_once "./component/surat.php";
+require_once "./component/laporan.php";
 require_once "./component/saran.php";
 require_once "./backend/function.php";
 require_once "./backend/query.php";
-require_once "./backend/layanan.php";
+require_once "./backend/file.php";
 require_once "./backend/aksi-surat.php";
+require_once "./backend/aksi-laporan.php";
 require_once "./backend/aksi-saran.php";
+
+// Init
+$rootdir = __DIR__;
 
 // Aksi Surat
 if (isset($_GET['fill-surat'])) {
@@ -17,6 +22,8 @@ if (isset($_GET['fill-surat'])) {
 } else if (isset($_GET['fill-saran'])) {
     Saran::fill($_GET['fill-saran']);
     exit;
+} else if (isset($_POST['send-laporan'])) {
+    Laporan::send($_POST['send-laporan']);
 } else if (isset($_POST['send-saran'])) {
     Saran::send($_POST['send-saran']);
 }
@@ -108,36 +115,7 @@ if ($aksi_state) {
         <?php Surat::modal() ?>
 
         <!-- Modal Laporan -->
-        <div class="modal fade" id="laporan-form" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Surat</h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Jenis Laporan</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>LAPORAN PENDATANG</td>
-                                    <td><button class="btn btn-primary">Buat</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php Laporan::modal() ?>
 
         <!-- Modal Saran -->
         <?php Saran::modal() ?>
