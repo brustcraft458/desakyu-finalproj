@@ -111,8 +111,8 @@ $suratList = TableSurat::loadTable();
                                     <td class="d-flex justify-content-around">
                                         <?php if ($_SESSION['role'] == 'admin_desa') :?>
                                             <?php if ($surat['status_pengajuan'] == "DIAJUKAN") :?>
-                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#disetujui-form-<?= $count ?>"><i class="ri-check-line"></i></button>
-                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ditolak-form-<?= $count ?>"><i class="ri-close-line"></i></button>
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#acc-form-<?= $count ?>"><i class="ri-checkbox-multiple-fill"></i></button>
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-form-<?= $count ?>"><i class="ri-delete-bin-2-fill"></i></button>
                                             <?php else:?>
                                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#print-form-<?= $count ?>"><i class="ri-printer-fill"></i></button>
                                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-form-<?= $count ?>"><i class="ri-delete-bin-2-fill"></i></button>
@@ -135,6 +135,30 @@ $suratList = TableSurat::loadTable();
                 
                 <div>
                     <?php foreach ($suratList as $count => $surat) : ?>
+                        <!-- Modal Acc Surat -->
+                        <div class="modal fade" id="acc-form-<?= $count ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <form action="" method="POST" class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Surat</h5>
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <?php /*Surat::modalForm("surat-keterangan-usaha-dalam", $surat);*/ ?>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                        <button type="submit" class="btn btn-danger" name="acc-setujui" value="surat-keterangan-usaha-dalam">Tolak</button>
+                                        <button type="submit" class="btn btn-success" name="acc-setujui" value="surat-keterangan-usaha-dalam">Setujui</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                         <!-- Modal Disetujui Surat -->
                         <div class="modal fade" id="disetujui-form-<?= $count ?>" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog" role="document">
