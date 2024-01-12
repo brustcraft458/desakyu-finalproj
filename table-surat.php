@@ -146,64 +146,14 @@ $suratList = TableSurat::loadTable();
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <div>
-                                            <?php /*Surat::modalForm("surat-keterangan-usaha-dalam", $surat);*/ ?>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-danger" name="acc-setujui" value="surat-keterangan-usaha-dalam">Tolak</button>
-                                        <button type="submit" class="btn btn-success" name="acc-setujui" value="surat-keterangan-usaha-dalam">Setujui</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <!-- Modal Disetujui Surat -->
-                        <div class="modal fade" id="disetujui-form-<?= $count ?>" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <form action="" method="POST" class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Setujui Surat</h5>
-                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div>
-                                            <div style="display: none">
-                                                <input type="hidden" class="form-control text-uppercase" id="id_surat" name="id_surat" value="<?= $surat['id_surat'] ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-primary" name="disetujui-surat">Setujui</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <!-- Modal Ditolak Surat -->
-                        <div class="modal fade" id="ditolak-form-<?= $count ?>" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <form action="" method="POST" class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Tolak Surat</h5>
-                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div>
-                                            <div style="display: none">
-                                                <input type="hidden" class="form-control text-uppercase" id="id_surat" name="id_surat" value="<?= $surat['id_surat'] ?>">
-                                            </div>
+                                        <div style="display: none">
+                                            <input type="hidden" class="form-control text-uppercase" id="id_surat" name="id_surat" value="<?= $surat['id_surat'] ?>">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                         <button type="submit" class="btn btn-danger" name="ditolak-surat">Tolak</button>
+                                        <button type="submit" class="btn btn-success" name="disetujui-surat">Setujui</button>
                                     </div>
                                 </form>
                             </div>

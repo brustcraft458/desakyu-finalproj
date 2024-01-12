@@ -201,7 +201,7 @@ $pendudukList = TablePenduduk::loadTable();
 <?php function elementFormPenduduk($penduduk = [], $inputAttribute = "") {?>
     <?php
     if (!$penduduk) {
-        $penduduk = arrayAssocFill(["id_penduduk", "nik", "nama", "tempat_lahir", "tanggal_lahir", "jenis_kelamin", "alamat", "alamat_rt", "alamat_rw", "alamat_kel_desa", "alamat_kecamatan", "alamat_kabupaten", "agama", "status_perkawinan", "pekerjaan", "kewarganegaraan"], "");
+        $penduduk = arrayAssocFill(["id_penduduk", "nik", "nkk", "nama", "tempat_lahir", "tanggal_lahir", "jenis_kelamin", "alamat", "alamat_rt", "alamat_rw", "alamat_kel_desa", "alamat_kecamatan", "alamat_kabupaten", "agama", "status_perkawinan", "pekerjaan", "kewarganegaraan"], "");
         $penduduk['alamat_kel_desa'] = "SUKAHARJA";
         $penduduk['alamat_kecamatan'] = "TELUKJAMBE TIMUR";
         $penduduk['alamat_kabupaten'] = "KARAWANG";
@@ -214,8 +214,12 @@ $pendudukList = TablePenduduk::loadTable();
                 <input type="hidden" class="form-control text-uppercase" id="id_penduduk" name="id_penduduk" value="<?= $penduduk['id_penduduk'] ?>">
             </div>
             <div class="form-group">
-                <label for="nik" class="col-form-label">NIK:</label>
+                <label for="nik" class="col-form-label">Nomor KTP:</label>
                 <input type="number" class="form-control text-uppercase" id="nik" name="nik" value="<?= $penduduk['nik'] ?>" <?= $inputAttribute ?>>
+            </div>
+            <div class="form-group">
+                <label for="nkk" class="col-form-label">Nomor KK:</label>
+                <input type="number" class="form-control text-uppercase" id="nkk" name="nkk" value="<?= $penduduk['nkk'] ?>" <?= $inputAttribute ?>>
             </div>
             <div class="form-group">
                 <label for="nama" class="col-form-label">Nama:</label>

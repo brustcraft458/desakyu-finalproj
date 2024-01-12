@@ -35,25 +35,25 @@ class Surat {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <!-- <tr>
                                 <td>SURAT KETERANGAN TIDAK MAMPU</td>
                                 <td><button class="btn btn-primary">Buat</button></td>
-                            </tr>
-                            <tr>
+                            </tr> -->
+                            <!-- <tr>
                                 <td>SURAT KETERANGAN USAHA</td>
                                 <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#skud-form">Buat</button></td>
-                            </tr>
-                            <tr>
+                            </tr> -->
+                            <!-- <tr>
                                 <td>SURAT PENGHASILAN ORANG TUA</td>
                                 <td><button class="btn btn-primary">Buat</button></td>
-                            </tr>
-                            <tr>
+                            </tr> -->
+                            <!-- <tr>
                                 <td>SURAT KETERANGAN DOMISILI</td>
-                                <td><button class="btn btn-primary">Buat</button></td>
-                            </tr>
+                                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#skd-form">Buat</button></td>
+                            </tr> -->
                             <tr>
                                 <td>SURAT KETERANGAN BELUM MENIKAH</td>
-                                <td><button class="btn btn-primary">Buat</button></td>
+                                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#skbm-form">Buat</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -86,19 +86,65 @@ class Surat {
             </form>
         </div>
     </div>
+
+    <!-- Modal Surat Domisili -->
+    <div class="modal fade" id="skd-form" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form action="" method="POST" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Surat</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <?php elementSurat("surat-keterangan-domisili"); ?>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary" name="send-surat" value="surat-keterangan-domisili">Kirim</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Surat Keterangan Belum Menikah -->
+    <div class="modal fade" id="skbm-form" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form action="" method="POST" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Surat</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <?php elementSurat("surat-keterangan-belum-menikah"); ?>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary" name="send-surat" value="surat-keterangan-belum-menikah">Kirim</button>
+                </div>
+            </form>
+        </div>
+    </div>
 <?php } ?>
 
 <?php function elementSurat($target) {?>
     <div class="form-group">
         <label for="nik" class="col-form-label">NIK:</label>
-        <div class="d-flex flex-row align-items-center" id="fgroup-surat-keterangan-usaha-dalam-nik">
+        <div class="d-flex flex-row align-items-center" id="fgroup-<?= $target ?>-nik">
             <input type="number" class="form-control text-uppercase" id="nik" name="nik">
             <div class="check-status mx-2"></div>
         </div>
     </div>
     <div class="form-group">
         <label for="nama" class="col-form-label">Nama Lengkap:</label>
-        <div class="d-flex flex-row align-items-center" id="fgroup-surat-keterangan-usaha-dalam-nama">
+        <div class="d-flex flex-row align-items-center" id="fgroup-<?= $target ?>-nama">
             <input type="text" class="form-control text-uppercase" id="nama" name="nama">
             <div class="check-status mx-2"></div>
         </div>
@@ -132,40 +178,116 @@ class Surat {
 
     <?php
     if (!$data) {
-        $data = arrayAssocFill(["id_penduduk", "jenis_kelamin", "tempat_lahir", "tanggal_lahir", "agama", "pekerjaan", "alamat"], "");
+        $data = arrayAssocFill(["id_penduduk", "nik", "nkk", "nama", "tempat_lahir", "tanggal_lahir", "jenis_kelamin", "alamat", "alamat_rt", "alamat_rw", "alamat_kel_desa", "alamat_kecamatan", "alamat_kabupaten", "agama", "status_perkawinan", "pekerjaan", "kewarganegaraan"], "");
     }
     ?>
 
     <?php if ($target == "surat-keterangan-usaha-dalam") :?>
-        <div style="display: none;">
-            <input type="hidden" class="form-control text-uppercase" id="id_penduduk" name="id_penduduk" value="<?= $data['id_penduduk']?>">
-        </div>
-        <div class="form-group">
-            <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin:</label>
-            <input type="text" class="form-control text-uppercase w-50" id="jenis_kelamin" name="jenis_kelamin" value="<?= $data['jenis_kelamin'] ?>" disabled>
-        </div>
-        <div class="form-group">
-            <label for="tempat_lahir" class="col-form-label">Tempat, Tanggal Lahir:</label>
-            <div class="d-flex flex-row gap-2">
-                <input type="text" class="form-control text-uppercase w-50" id="tempat_lahir" name="tempat_lahir" value="<?= $data['tempat_lahir'] ?>" disabled>
-                <input type="date" class="form-control text-uppercase" id="tanggal_lahir" name="tanggal_lahir" value="<?= $data['tanggal_lahir'] ?>" disabled>
+        <div>
+            <div style="display: none;">
+                <input type="hidden" class="form-control text-uppercase" id="id_penduduk" name="id_penduduk" value="<?= $data['id_penduduk']?>">
+            </div>
+            <div class="form-group">
+                <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin:</label>
+                <input type="text" class="form-control text-uppercase w-50" id="jenis_kelamin" name="jenis_kelamin" value="<?= $data['jenis_kelamin'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="tempat_lahir" class="col-form-label">Tempat, Tanggal Lahir:</label>
+                <div class="d-flex flex-row gap-2">
+                    <input type="text" class="form-control text-uppercase w-50" id="tempat_lahir" name="tempat_lahir" value="<?= $data['tempat_lahir'] ?>" disabled>
+                    <input type="date" class="form-control text-uppercase" id="tanggal_lahir" name="tanggal_lahir" value="<?= $data['tanggal_lahir'] ?>" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="agama" class="col-form-label">Agama:</label>
+                <input type="text" class="form-control text-uppercase" id="agama" name="agama" value="<?= $data['agama'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="pekerjaan" class="col-form-label">Pekerjaan:</label>
+                <input type="text" class="form-control text-uppercase" id="pekerjaan" name="pekerjaan" value="<?= $data['pekerjaan'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="alamat" class="col-form-label">Alamat:</label>
+                <input type="text" class="form-control text-uppercase" id="alamat" name="alamat" value="<?= $data['alamat'] ?>">
+            </div>
+            <div class="form-group">
+                <label for="nama_usaha" class="col-form-label">Nama Usaha:</label>
+                <input type="text" class="form-control text-uppercase" id="nama_usaha" name="nama_usaha" value="">
             </div>
         </div>
-        <div class="form-group">
-            <label for="agama" class="col-form-label">Agama:</label>
-            <input type="text" class="form-control text-uppercase" id="agama" name="agama" value="<?= $data['agama'] ?>" disabled>
+    <?php elseif ($target == "surat-keterangan-domisili") :?>
+        <div>
+            <div style="display: none;">
+                <input type="hidden" class="form-control text-uppercase" id="id_penduduk" name="id_penduduk" value="<?= $data['id_penduduk']?>">
+            </div>
+            <div class="form-group">
+                <label for="nkk" class="col-form-label">Nomor KK:</label>
+                <input type="number" class="form-control text-uppercase" id="nkk" name="nkk" value="<?= $data['nkk'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="tempat_lahir" class="col-form-label">Tempat, Tanggal Lahir:</label>
+                <div class="d-flex flex-row gap-2">
+                    <input type="text" class="form-control text-uppercase w-50" id="tempat_lahir" name="tempat_lahir" value="<?= $data['tempat_lahir'] ?>" disabled>
+                    <input type="date" class="form-control text-uppercase" id="tanggal_lahir" name="tanggal_lahir" value="<?= $data['tanggal_lahir'] ?>" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin:</label>
+                <input type="text" class="form-control text-uppercase w-50" id="jenis_kelamin" name="jenis_kelamin" value="<?= $data['jenis_kelamin'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="kewarganegaraan" class="col-form-label">Kewarganegaraan:</label>
+                <input type="text" class="form-control text-uppercase w-50" id="kewarganegaraan" name="kewarganegaraan" value="<?= $data['kewarganegaraan'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="agama" class="col-form-label">Agama:</label>
+                <input type="text" class="form-control text-uppercase" id="agama" name="agama" value="<?= $data['agama'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="pekerjaan" class="col-form-label">Pekerjaan:</label>
+                <input type="text" class="form-control text-uppercase" id="pekerjaan" name="pekerjaan" value="<?= $data['pekerjaan'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="alamat" class="col-form-label">Alamat:</label>
+                <input type="text" class="form-control text-uppercase" id="alamat" name="alamat" value="<?= $data['alamat'] ?>" disabled>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="pekerjaan" class="col-form-label">Pekerjaan:</label>
-            <input type="text" class="form-control text-uppercase" id="pekerjaan" name="pekerjaan" value="<?= $data['pekerjaan'] ?>" disabled>
-        </div>
-        <div class="form-group">
-            <label for="alamat" class="col-form-label">Alamat:</label>
-            <input type="text" class="form-control text-uppercase" id="alamat" name="alamat" value="<?= $data['alamat'] ?>">
-        </div>
-        <div class="form-group">
-            <label for="nama_usaha" class="col-form-label">Nama Usaha:</label>
-            <input type="text" class="form-control text-uppercase" id="nama_usaha" name="nama_usaha" value="">
+    <?php elseif ($target == "surat-keterangan-belum-menikah") :?>
+        <div>
+            <div style="display: none;">
+                <input type="hidden" class="form-control text-uppercase" id="id_penduduk" name="id_penduduk" value="<?= $data['id_penduduk']?>">
+            </div>
+            <div class="form-group">
+                <label for="nkk" class="col-form-label">Nomor KK:</label>
+                <input type="number" class="form-control text-uppercase" id="nkk" name="nkk" value="<?= $data['nkk'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="tempat_lahir" class="col-form-label">Tempat, Tanggal Lahir:</label>
+                <div class="d-flex flex-row gap-2">
+                    <input type="text" class="form-control text-uppercase w-50" id="tempat_lahir" name="tempat_lahir" value="<?= $data['tempat_lahir'] ?>" disabled>
+                    <input type="date" class="form-control text-uppercase" id="tanggal_lahir" name="tanggal_lahir" value="<?= $data['tanggal_lahir'] ?>" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin:</label>
+                <input type="text" class="form-control text-uppercase w-50" id="jenis_kelamin" name="jenis_kelamin" value="<?= $data['jenis_kelamin'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="kewarganegaraan" class="col-form-label">Kewarganegaraan:</label>
+                <input type="text" class="form-control text-uppercase w-50" id="kewarganegaraan" name="kewarganegaraan" value="<?= $data['kewarganegaraan'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="agama" class="col-form-label">Agama:</label>
+                <input type="text" class="form-control text-uppercase" id="agama" name="agama" value="<?= $data['agama'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="pekerjaan" class="col-form-label">Pekerjaan:</label>
+                <input type="text" class="form-control text-uppercase" id="pekerjaan" name="pekerjaan" value="<?= $data['pekerjaan'] ?>" disabled>
+            </div>
+            <div class="form-group">
+                <label for="alamat" class="col-form-label">Alamat:</label>
+                <input type="text" class="form-control text-uppercase" id="alamat" name="alamat" value="<?= $data['alamat'] ?>" disabled>
+            </div>
         </div>
     <?php endif; ?>
 <?php } ?>

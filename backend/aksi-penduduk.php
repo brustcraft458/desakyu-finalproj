@@ -6,12 +6,13 @@ function addPenduduk() {
     global $aksi_state, $aksi_message;
 
     // Insert data
-    $query = new Query("INSERT INTO penduduk (nik, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, alamat, alamat_rt, alamat_rw, alamat_kel_desa, alamat_kecamatan, alamat_kabupaten, agama, status_perkawinan, pekerjaan, kewarganegaraan) VALUES (UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?))");
+    $query = new Query("INSERT INTO penduduk (nik, nkk, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, alamat, alamat_rt, alamat_rw, alamat_kel_desa, alamat_kecamatan, alamat_kabupaten, agama, status_perkawinan, pekerjaan, kewarganegaraan) VALUES (UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?), UPPER(?))");
     $query->checkDuplicate("SELECT count(id_penduduk) as count FROM penduduk WHERE status_deleted = 0 AND nik = ?", [
         $_POST['nik']
     ]);
     $query->execute([
         $_POST['nik'],
+        $_POST['nkk'],
         $_POST['nama'],
         $_POST['tempat_lahir'],
         $_POST['tanggal_lahir'],
@@ -54,13 +55,14 @@ function editPenduduk() {
     global $aksi_state, $aksi_message;
 
     // Update data
-    $query = new Query("UPDATE penduduk SET nik = UPPER(?), nama = UPPER(?), tempat_lahir = UPPER(?), tanggal_lahir = UPPER(?), jenis_kelamin = UPPER(?), alamat = UPPER(?), alamat_rt = UPPER(?), alamat_rw = UPPER(?), alamat_kel_desa = UPPER(?), alamat_kecamatan = UPPER(?), alamat_kabupaten = UPPER(?), agama = UPPER(?), status_perkawinan = UPPER(?), pekerjaan = UPPER(?), kewarganegaraan = UPPER(?) WHERE id_penduduk = ?");
+    $query = new Query("UPDATE penduduk SET nik = UPPER(?), nkk = UPPER(?), nama = UPPER(?), tempat_lahir = UPPER(?), tanggal_lahir = UPPER(?), jenis_kelamin = UPPER(?), alamat = UPPER(?), alamat_rt = UPPER(?), alamat_rw = UPPER(?), alamat_kel_desa = UPPER(?), alamat_kecamatan = UPPER(?), alamat_kabupaten = UPPER(?), agama = UPPER(?), status_perkawinan = UPPER(?), pekerjaan = UPPER(?), kewarganegaraan = UPPER(?) WHERE id_penduduk = ?");
     $query->checkDuplicate("SELECT count(id_penduduk) as count FROM penduduk WHERE status_deleted = 0 AND nik = ? AND id_penduduk != ?", [
         $_POST['nik'],
         $_POST['id_penduduk']
     ]);
     $query->execute([
         $_POST['nik'],
+        $_POST['nkk'],
         $_POST['nama'],
         $_POST['tempat_lahir'],
         $_POST['tanggal_lahir'],
