@@ -2,43 +2,34 @@
 session_start();
 
 class StatisticDash extends Statistic {
-    static public function getTotalPenduduk() {
-        $query = new Query("SELECT COUNT(*) AS count FROM penduduk WHERE status_deleted = 0");
+    static $countTable = [];
+    static public function init() {
+        $query = new Query("SELECT table_name, count_value FROM count_total");
         $query->execute();
+        $data = $query->getData("multi");
 
-        $total = 0;
-        if($query->state) {
-            $data = $query->getData();
-            $total = $data['count'];
+        foreach ($data as $val) {
+            $table_name = $val['table_name'];
+            $count_value = $val['count_value'];
+
+            static::$countTable[$table_name] = $count_value;
         }
-
-        return $total;
+    }
+    
+    static public function getTotalPenduduk() {
+        return static::$countTable['penduduk'];
     }
 
     static public function getTotalSuratPending() {
-        $query = new Query("SELECT COUNT(*) AS count FROM surat INNER JOIN penduduk ON surat.id_penduduk = penduduk.id_penduduk WHERE surat.status_deleted = 0 AND status_pengajuan = 'DIAJUKAN' ");
-        $query->execute();
+        return static::$countTable['surat_pending'];
+    }
 
-        $total = 0;
-        if($query->state) {
-            $data = $query->getData();
-            $total = $data['count'];
-        }
-
-        return $total;
+    static public function getTotalLaporan() {
+        return static::$countTable['user'];
     }
 
     static public function getTotalUser() {
-        $query = new Query("SELECT COUNT(*) AS count FROM user WHERE status_verified = 1");
-        $query->execute();
-
-        $total = 0;
-        if($query->state) {
-            $data = $query->getData();
-            $total = $data['count'];
-        }
-
-        return $total;
+        return static::$countTable['user'];
     }
 }
 ?>

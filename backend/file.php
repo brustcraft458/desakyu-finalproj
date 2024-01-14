@@ -10,10 +10,17 @@ class File {
         $this->name = $name;
     }
 
+    static public function generateName() {
+        $name = uniqid() . "-" . uniqid();
+        return $name;
+    }
+
     public function moveUpload($pname) {
         global $rootdir;
         $fileType = strtolower(pathinfo($_FILES[$pname]["name"], PATHINFO_EXTENSION));
-        $this->name = uniqid() . "-" . uniqid() . '.' . $fileType;
+        $name = self::generateName();
+
+        $this->name = $name . '.' . $fileType;
         $fullpath = $rootdir . $this->dir . $this->name;
 
         if (move_uploaded_file($_FILES[$pname]["tmp_name"], $fullpath)) {

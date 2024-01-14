@@ -1,5 +1,6 @@
 <?php
 require './config/db.php';
+require_once './composer/vendor/autoload.php';
 require_once "./component/surat.php";
 require_once "./component/laporan.php";
 require_once "./component/saran.php";

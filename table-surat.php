@@ -1,11 +1,13 @@
 <?php
 require './config/db.php';
+require_once './composer/vendor/autoload.php';
 require_once "./component/chart.php";
 require_once "./component/sidebar.php";
 require_once "./component/table.php";
 require_once "./component/surat.php";
 require_once "./backend/function.php";
 require_once "./backend/query.php";
+require_once "./backend/file.php";
 require_once "./backend/table-surat.php";
 require_once "./backend/aksi-surat.php";
 
@@ -137,7 +139,7 @@ $suratList = TableSurat::loadTable();
                     <?php foreach ($suratList as $count => $surat) : ?>
                         <!-- Modal Acc Surat -->
                         <div class="modal fade" id="acc-form-<?= $count ?>" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-lg" role="document">
                                 <form action="" method="POST" class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Surat</h5>
@@ -148,6 +150,14 @@ $suratList = TableSurat::loadTable();
                                     <div class="modal-body">
                                         <div style="display: none">
                                             <input type="hidden" class="form-control text-uppercase" id="id_surat" name="id_surat" value="<?= $surat['id_surat'] ?>">
+                                            <input type="hidden" class="form-control text-uppercase" id="jenis" name="jenis" value="<?= $surat['jenis'] ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <iframe src="./<?= $surat['file_surat'] ?>" width="100%" height="800px"></iframe>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="surat_reupload" class="col-form-label">Surat yg Ditandatangi:</label><br>
+                                            <input type="file" class="form-control-file" id="surat_reupload" name="surat_reupload" accept="application/pdf">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -179,6 +189,27 @@ $suratList = TableSurat::loadTable();
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                         <button type="submit" class="btn btn-danger" name="delete-surat">Hapus</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Modal Print Surat -->
+                        <div class="modal fade" id="print-form-<?= $count ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <form action="" method="POST" class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Surat</h5>
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <iframe src="./<?= $surat['file_surat'] ?>" width="100%" height="800px"></iframe>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
                                     </div>
                                 </form>
                             </div>

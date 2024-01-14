@@ -2,12 +2,14 @@
 require './config/db.php';
 require_once "./component/chart.php";
 require_once "./component/sidebar.php";
+require_once "./backend/function.php";
 require_once "./backend/query.php";
 require_once "./backend/statistic.php";
 require_once "./backend/dashboard.php";
 
 // Init
 Sidebar::selection("dashboard");
+StatisticDash::init();
 $totalPenduduk = StatisticDash::getTotalPenduduk();
 $totalSuratPending = StatisticDash::getTotalSuratPending();
 ?>

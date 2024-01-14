@@ -1,5 +1,6 @@
 RewriteEngine On
 
 # Disable access
-RewriteRule ^upload/ - [F]
-RewriteRule ^download/ - [F]
+#RewriteRule ^upload/ - [F]
+#RewriteRule ^document/ - [F]
+RewriteRule ^template/ - [F]

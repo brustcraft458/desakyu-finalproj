@@ -1,0 +1,18 @@
+{
+    "name": "becl/desakyu",
+    "autoload": {
+        "psr-4": {
+            "Becl\\Desakyu\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "brustcraft458",
+            "email": "brustcraft458@gmail.com"
+        }
+    ],
+    "require": {
+        "setasign/fpdi": "^2.6",
+        "setasign/fpdf": "^1.8"
+    }
+}
