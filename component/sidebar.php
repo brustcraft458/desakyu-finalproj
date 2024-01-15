@@ -1,37 +1,56 @@
 <?php
 class Sidebar {
     static $menuList = [];
+    static $username = "";
+    static $select = "";
+    static $role = "";
+    
     static public function selection($select) {
-        $username = "";
-        $role = "";
         if (isset($_SESSION['username'])) {
-            $username = $_SESSION['username'];
+            self::$username = $_SESSION['username'];
         }
         if (isset($_SESSION['role'])) {
-            $role = $_SESSION['role'];
+            self::$role = $_SESSION['role'];
         }
+        self::$select = $select;
 
         // Menu
-        if ($role == "warga") {
+        if (self::$role == "warga") {
             self::$menuList =  ["dashboard" => ["Dashboard", "ri-dashboard-2-line"]];
-        } elseif ($role == "admin_rt" || $role == "admin_desa" || $role == "admin_super") {
+        } elseif (self::$role == "admin_rt" || self::$role == "admin_desa") {
             self::$menuList = [
                 "dashboard" => ["Dashboard", "ri-dashboard-2-line"],
                 "table-penduduk" => ["Data Penduduk", "ri-table-line"],
-                "surat" => ["Layanan Surat", "ri-mail-line"],
-                "laporan" => ["Laporan", "ri-file-text-line"],
-                "table-master" => ["Master Data", "ri-dashboard-2-line"]
+                "table-surat" => ["Layanan Surat", "ri-mail-line"],
+                "table-laporan" => ["Layanan Laporan", "ri-file-text-line"],
+                "table-saran" => ["Saran", "ri-chat-quote-line"]
+            ];
+        } elseif (self::$role == "admin_super") {
+            self::$menuList = [
+                "dashboard" => ["Dashboard", "ri-dashboard-2-line"],
+                "table-penduduk" => ["Data Penduduk", "ri-table-line"],
+                "table-surat" => ["Layanan Surat", "ri-mail-line"],
+                "table-laporan" => ["Layanan Laporan", "ri-file-text-line"],
+                "table-saran" => ["Saran", "ri-chat-quote-line"],
+                "table-user" => ["Kelola User", "ri-user-settings-line"]
             ];
         }
 
-        return sidebarElement($select, self::$menuList, $username);
+        if (!array_key_exists(self::$select, self::$menuList)) {
+            header("Location: login.php");
+            die;
+        }
+    }
+
+    static public function render() {
+        return sidebarElement(self::$select, self::$menuList, self::$username);
     }
 }
 ?>
 
 <!-- Sidebar -->
 <?php function sidebarElement($select, $data, $username) {?>
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height: 100vh">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; min-height: 100vh">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <svg class="bi me-2" width="40" height="32">
                 <use xlink:href="#bootstrap" />

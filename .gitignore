@@ -1,1 +1,7 @@
 tmp/
+upload/ktp/*
+upload/surat/*
+document/surat/*
+template/*
+composer/src/
+composer/vendor/
