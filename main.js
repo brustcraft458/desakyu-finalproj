@@ -21,6 +21,10 @@ document.querySelectorAll('.custom-option').forEach(element => {
     elementCustomOption(element, element.parentNode)
 });
 
+// Clean Phone Number
+document.querySelectorAll('.phone-number').forEach(element => {
+    elementPhoneNumber(element)
+});
 
 // Custom Option
 function elementCustomOption(option, parrent) {
@@ -36,6 +40,14 @@ function elementCustomOption(option, parrent) {
         const nParrent = container.querySelector(`#${id}`)
         nParrent.focus()
     }
+}
+
+// Phone Number
+function elementPhoneNumber(element) {
+    element.addEventListener('input', function() {
+        let phone = element.value.replace(/\s/g, '').replace(/[^0-9+]/g, '')
+        element.value = phone
+    })
 }
 
 // Edit Alert

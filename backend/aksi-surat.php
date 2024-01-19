@@ -74,13 +74,26 @@ function suratFill($target) {
 function sendSurat($target) {
     global $aksi_state, $aksi_message;
     $id_penduduk = $_POST['id_penduduk'];
+    $kontak = $_POST['kontak'];
+
+    // Convert Phone
+    if ($pphone = isPhoneNumber($kontak)) {
+        if ($pphone == "local") {
+            $kontak = convertPhone62($kontak);
+        }
+    } else {
+        $aksi_state = false;
+        $aksi_message = "fail_phone";
+        return;
+    }
+
     
     // Insert data
     $query = new Query("INSERT INTO surat (id_penduduk, jenis, kontak) VALUES (?, UPPER(?), ?)");
     $query->execute([
         $id_penduduk,
         str_replace('-', ' ' , $target),
-        $_POST['kontak']
+        $kontak
     ]);
     $id_surat = $query->getInsertedId();
 

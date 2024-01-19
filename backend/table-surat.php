@@ -40,12 +40,12 @@ class TableSurat extends Table {
             // Search
             $query = new Query(
                 "SELECT
-                    id_surat, nama, nik, jenis, status_pengajuan, file_surat, file_surat_final
+                    id_surat, nama, nik, jenis, status_pengajuan, kontak, file_surat, file_surat_final
                 FROM surat
                     INNER JOIN penduduk ON surat.id_penduduk = penduduk.id_penduduk
                 WHERE
                     surat.status_deleted = 0 AND
-                    concat(nama, nik, jenis, status_pengajuan, file_surat, file_surat_final) LIKE ?
+                    concat(nama, nik, jenis, status_pengajuan, kontak, file_surat, file_surat_final) LIKE ?
                 LIMIT ?, ?"
             );
     
@@ -58,7 +58,7 @@ class TableSurat extends Table {
             // Default
             $query = new Query(
                 "SELECT
-                    id_surat, nama, nik, jenis, status_pengajuan, file_surat, file_surat_final
+                    id_surat, nama, nik, jenis, status_pengajuan, kontak, file_surat, file_surat_final
                 FROM surat
                     INNER JOIN penduduk ON surat.id_penduduk = penduduk.id_penduduk
                 WHERE

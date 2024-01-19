@@ -29,10 +29,6 @@ if (isset($_GET['fill-surat'])) {
     Saran::send($_POST['send-saran']);
 }
 
-if ($aksi_state) {
-    header("Location: layanan.php");
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,6 +43,7 @@ if ($aksi_state) {
 </head>
 <body>
     <script src="./function.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <header>
         <div class="background-img mix-white">
@@ -111,6 +108,27 @@ if ($aksi_state) {
                 </div>
             </div>
         </div>
+        
+        <!-- Sweet Alert -->
+        <?php if (!$aksi_state && $aksi_message != "") :?>
+            <script>
+                Swal.fire({
+                  title: "<?= $aksi_message ?>",
+                  text: "",
+                  icon: "error"
+                });
+            </script>
+        <?php elseif ($aksi_state): ?>
+            <script>
+                Swal.fire({
+                  title: "Data berhasil dikirim",
+                  text: "",
+                  icon: "success"
+                }).then(() => {
+                    window.location = "layanan.php"
+                })
+            </script>
+        <?php endif; ?>
 
         <!-- Modal Surat -->
         <?php Surat::modal() ?>

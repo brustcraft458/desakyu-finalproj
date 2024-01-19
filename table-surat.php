@@ -116,15 +116,18 @@ $suratList = TableSurat::loadTable();
                                             <?php if ($surat['status_pengajuan'] == "DIAJUKAN") :?>
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#acc-form-<?= $count ?>"><i class="ri-checkbox-multiple-fill"></i></button>
                                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-form-<?= $count ?>"><i class="ri-delete-bin-2-fill"></i></button>
-                                            <?php else:?>
+                                            <?php elseif ($surat['status_pengajuan'] == "DISETUJUI") :?>
                                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#print-form-<?= $count ?>"><i class="ri-printer-fill"></i></button>
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-form-<?= $count ?>"><i class="ri-delete-bin-2-fill"></i></button>
+                                            <?php else:?>
+                                                <button type="button" class="btn btn-secondary disabled" disabled><i class="ri-printer-fill"></i></button>
                                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-form-<?= $count ?>"><i class="ri-delete-bin-2-fill"></i></button>
                                             <?php endif;?>
                                         <?php else:?>
-                                            <?php if ($surat['status_pengajuan'] == "DIAJUKAN") :?>
-                                                <button type="button" class="btn btn-secondary disabled" disabled><i class="ri-printer-fill"></i></button>
-                                            <?php else:?>
+                                            <?php if ($surat['status_pengajuan'] == "DISETUJUI") :?>
                                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#print-form-<?= $count ?>"><i class="ri-printer-fill"></i></button>
+                                            <?php else:?>
+                                                <button type="button" class="btn btn-secondary disabled" disabled><i class="ri-printer-fill"></i></button>
                                             <?php endif;?>
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info-form-<?= $count ?>"><i class="ri-information-2-fill"></i></button>
                                         <?php endif;?>
@@ -211,6 +214,9 @@ $suratList = TableSurat::loadTable();
                                         </div>
                                     </div>
                                     <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <?php $kalimatSurat = "Disampaikan%20bahwa%20surat%20yang%20Anda%20minta%20telah%20selesai%20diproses%20dan%20bisa%20mengunduhnya%20di%20sini%0D%0A" . getHostFull() . "/" . $surat['file_surat_final'] ?>
+                                        <button type="button" class="btn btn-success" onclick="window.open(`https://wa.me/<?= $surat['kontak'] ?>?text=<?= $kalimatSurat ?>`, '_blank')">Bagikan</button>
                                     </div>
                                 </form>
                             </div>
