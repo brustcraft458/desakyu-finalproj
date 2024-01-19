@@ -19,6 +19,19 @@ function accStatusSurat($status) {
         return;
     }
 
+    // Acc
+    if ($status == "DISETUJUI") {
+        // File
+        $path_acc = File::moveUpload("surat_reupload", "document/surat/");
+
+        // Query
+        $query = new Query("UPDATE surat SET file_surat_final = ? WHERE id_surat = ?");
+        $query->execute([
+            $path_acc,
+            $_POST['id_surat']
+        ]);
+    }
+
     // End
     $aksi_state = true;
     $aksi_message = $query->message;
@@ -63,20 +76,13 @@ function sendSurat($target) {
     $id_penduduk = $_POST['id_penduduk'];
     
     // Insert data
-    $query = new Query("INSERT INTO surat (id_penduduk, jenis) VALUES (?, UPPER(?))");
+    $query = new Query("INSERT INTO surat (id_penduduk, jenis, kontak) VALUES (?, UPPER(?), ?)");
     $query->execute([
         $id_penduduk,
-        str_replace('-', ' ' , $target)
+        str_replace('-', ' ' , $target),
+        $_POST['kontak']
     ]);
     $id_surat = $query->getInsertedId();
-
-    // Read data
-    $query = new Query("SELECT * FROM surat INNER JOIN surat_skbm ON surat.id_skbm = surat_skbm.id_skbm WHERE id_surat = ?");
-    $query->execute([
-        $id_surat
-    ]);
-    $surat = $query->getData();
-    // var_dump($surat);
 
     // Custom Value
     switch ($target) {
@@ -90,22 +96,28 @@ function sendSurat($target) {
             break;
         
         case 'surat-keterangan-belum-menikah':
-            $id_skbm = $surat['id_skbm'];
-
-            // File
-            $filepath = savepdfSurat($target, $surat);
-
-            // Master
-            $querym = new Query("UPDATE surat SET file_surat = ? WHERE id_surat = ?");
-            $querym->execute([
-                $filepath,
+            // Read data
+            $query = new Query("SELECT * FROM surat INNER JOIN surat_skbm ON surat.id_skbm = surat_skbm.id_skbm WHERE id_surat = ?");
+            $query->execute([
                 $id_surat
             ]);
+            $surat = $query->getData();
+            $id_skbm = $surat['id_skbm'];
             break;
         
         default:
             exit;
     }
+
+    // File
+    $filepath = savepdfSurat($target, $surat);
+
+    // Master
+    $querym = new Query("UPDATE surat SET file_surat = ? WHERE id_surat = ?");
+    $querym->execute([
+        $filepath,
+        $id_surat
+    ]);
 
     // End
     $aksi_state = true;

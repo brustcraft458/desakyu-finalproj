@@ -1,36 +1,30 @@
 <?php
 class File {
-    private $dir;
-    private $name;
-    private $target;
-    public $state = false;
-
-    public function __construct($dir, $name = "") {
-        $this->dir = $dir;
-        $this->name = $name;
-    }
-
     static public function generateName() {
-        $name = uniqid() . "-" . uniqid();
+        $randomHex = bin2hex(random_bytes(16));
+        $name = uniqid() . $randomHex;
         return $name;
     }
 
-    public function moveUpload($pname) {
+    static public function moveUpload($pname, $dir) {
         global $rootdir;
         $fileType = strtolower(pathinfo($_FILES[$pname]["name"], PATHINFO_EXTENSION));
         $name = self::generateName();
 
-        $this->name = $name . '.' . $fileType;
-        $fullpath = $rootdir . $this->dir . $this->name;
+        $name = $name . '.' . $fileType;
+        $path =  $dir . $name;
+        $fullpath = "$rootdir/$path";
 
         if (move_uploaded_file($_FILES[$pname]["tmp_name"], $fullpath)) {
-            $this->state = true;
+            return $path;
+        } else {
+            return null;
         }
     }
 
-    public function saveDownload() {
+    static public function saveDownload($path) {
         global $rootdir;
-        $fullpath = $rootdir . $this->dir . $this->name;
+        $fullpath = "$rootdir/$path" ;
 
         if (file_exists($fullpath)) {
             header('Content-Description: File Transfer');
@@ -48,6 +42,19 @@ class File {
         } else {
             echo 'File not found';
         }
+    }
+
+    static public function move($path_a, $path_b) {
+        global $rootdir;
+        $pathf_b = $path_b . basename($path_a);
+
+        rename("$rootdir/$path_a", "$rootdir/$pathf_b");
+        return $pathf_b;
+    }
+
+    static public function delete($path) {
+        global $rootdir;
+        return unlink("$rootdir/$path");
     }
 }
 ?>

@@ -12,6 +12,7 @@ require_once "./backend/table-surat.php";
 require_once "./backend/aksi-surat.php";
 
 // Init
+$rootdir = __DIR__;
 Sidebar::selection("table-surat");
 
 // Aksi Surat
@@ -140,7 +141,7 @@ $suratList = TableSurat::loadTable();
                         <!-- Modal Acc Surat -->
                         <div class="modal fade" id="acc-form-<?= $count ?>" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
-                                <form action="" method="POST" class="modal-content">
+                                <form action="" method="POST" class="modal-content" enctype="multipart/form-data">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Surat</h5>
                                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -206,7 +207,7 @@ $suratList = TableSurat::loadTable();
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <iframe src="./<?= $surat['file_surat'] ?>" width="100%" height="800px"></iframe>
+                                            <iframe src="./<?= $surat['file_surat_final'] ?>" width="100%" height="800px"></iframe>
                                         </div>
                                     </div>
                                     <div class="modal-footer">

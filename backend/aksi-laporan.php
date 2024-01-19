@@ -9,10 +9,9 @@ function sendLaporan($target) {
     switch ($target) {
         case 'laporan-pengkinian-data':
             // File
-            $file = new File("/upload/ktp/", "");
-            $file->moveUpload("ktp_img");
+            $path = File::moveUpload("ktp_img", "upload/ktp/");
 
-            if (!$file->state) {
+            if (!$path) {
                 $aksi_state = false;
                 $aksi_message = "file_fail";
                 var_dump($_POST);
@@ -21,7 +20,7 @@ function sendLaporan($target) {
             }
 
             // Tes download
-            $file->saveDownload();
+            File::saveDownload($path);
 
 
             // Query

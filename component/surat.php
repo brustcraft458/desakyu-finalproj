@@ -151,6 +151,11 @@ class Surat {
     </div>
 
     <?php elementSuratFill($target) ?>
+
+    <div class="form-group">
+        <label for="kontak" class="col-form-label">Nomor HP / Email:</label>
+        <input type="text" class="form-control text-uppercase" id="kontak" name="kontak">
+    </div>
 <?php } ?>
 
 <?php function elementSuratFill($target) { ?>
